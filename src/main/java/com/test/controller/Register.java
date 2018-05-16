@@ -29,10 +29,7 @@ public class Register {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
         response.setContentType("text/html;charset=utf-8");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response. setCharacterEncoding("UTF-8");
+
         PrintWriter pw = response.getWriter();
         if(mongoTemplate.count(query,Users.class) == 0){
             Users user = new Users();
@@ -40,7 +37,6 @@ public class Register {
             user.setPassword(password);
             mongoTemplate.save(user);
             pw.print("ok");
-
 
         }
     }

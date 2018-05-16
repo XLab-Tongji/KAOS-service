@@ -1,24 +1,12 @@
-:::::::::::::::::::
-Use Case: ${value}
-:::::::::::::::::::
 
-'''''''''''''''
-BasicEventFlow
-'''''''''''''''
-${basicEventFlow}
-
-'''''''''''''''''
-AddtionEventFlow
-'''''''''''''''''
-${addtionEventFlow}
-
-'''''''''''''
-BusinessRule
-'''''''''''''
-${businessRule}
-
-''''''''''''''''''
-NonFunctionalRule
-''''''''''''''''''
-${nonFunctionalRule}
-
++-----------------+--------------------+
+|Use Case         |    ${value}        |
++-----------------+--------------------+
+|BasicEventFlow   |${basicEventFlow}   |
++-----------------+--------------------+
+|AddtionEventFlow |${addtionEventFlow} |
++-----------------+--------------------+
+|BusinessRule     |${businessRule}     |
++-----------------+--------------------+
+|NonFunctionalRule|${nonFunctionalRule}|
++-----------------+--------------------+

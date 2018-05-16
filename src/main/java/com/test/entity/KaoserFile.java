@@ -8,6 +8,15 @@ public class KaoserFile {
     private String name;
     private String jsonStr;
     private String myname;
+    private String projectname;
+
+    public String getProjectname() {
+        return projectname;
+    }
+
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
+    }
 
     public String getMyname() {
         return myname;

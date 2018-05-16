@@ -33,18 +33,21 @@ public class SaveToMongodbController {
         String jsonName=request.getParameter("jsname");
         String jsonGet=request.getParameter("jsonStr");
         String myName=request.getParameter("myname");
+        String title=request.getParameter("mytitle");
+
         System.out.println(jsonName);
         System.out.println(jsonGet);
         KaoserFile jsoninfo=new KaoserFile();
         jsoninfo.setName(jsonName);
         jsoninfo.setJsonStr(jsonGet);
         jsoninfo.setMyname(myName);
+        jsoninfo.setProjectname(title);
         response.setContentType("application/json;charset=utf-8");
 
         String resp="";
         System.out.println(ResourceUtils.getURL("classpath").getPath());
         Criteria criatira = new Criteria();
-        criatira.andOperator(Criteria.where("myname").is(myName), Criteria.where("name").is(jsonName));
+        criatira.andOperator(Criteria.where("myname").is(myName), Criteria.where("projectname").is(title));
         //mongoTemplate.find(new Query(criatira), KaoserFile.class);
         if(mongoTemplate.count(new Query(criatira), KaoserFile.class)>0){
             resp = "{\"name\":\"fail\"}";

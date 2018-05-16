@@ -33,9 +33,11 @@ public class DownLoadController {
         System.out.println("Find department with ID: " + templateID);
         String jsonName=request.getParameter("jsname");
         String jsonGet=request.getParameter("jsonStr");
-        System.out.println(jsonGet);
+        String usefulness = jsonGet.substring(1,jsonGet.length()-1);
 
-        String results = downloadService.getResult(jsonName,jsonGet,templateID);
+        System.out.println(usefulness);
+
+        String results = downloadService.getResult(jsonName,usefulness,templateID);
 
         response.setContentType("text/html;charset=utf-8");
 

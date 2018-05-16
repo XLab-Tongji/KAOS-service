@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,10 +27,6 @@ public class Login {
         Criteria criteria = new Criteria();
         criteria.andOperator(Criteria.where("username").is(username),Criteria.where("password").is(password));
         response.setContentType("text/html;charset=utf-8");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response. setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
         System.out.println(mongoTemplate.count(new Query(criteria),Users.class));
         if(mongoTemplate.count(new Query(criteria),Users.class) > 0){
@@ -38,5 +35,11 @@ public class Login {
         else {
             pw.print(-1);
         }
+    }
+    @GetMapping("/hello")
+    public String printResult(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        String str = request.getParameter("name");
+        return "hello"+str;
     }
 }

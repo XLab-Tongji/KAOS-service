@@ -1,7 +1,7 @@
 # Requirement Specification (需求规约)
 
 ## Project Introduction (项目介绍)
-### Name:da
+### Name:nn
 The detailed introduction of the project, the following information are required to mentioned:
 
 - background
@@ -17,26 +17,9 @@ Using a KAOS diagram to decompose the project form high-level goals to user scen
 
 Based on the Requirement Analysis, make a Use Case Diagram for the project, and write use case specifications for each use case.
 
-### Use Case: d
+### Use Case: bn 
 
-#### Description
-
-未定义
-
-#### Participants
+#### Detail
 
 未定义
-
-#### Pre-condition (Optional)
-
-未定义
-
-#### Post-condition (Optional)
-
-未定义
-
-
-
-
-
 
