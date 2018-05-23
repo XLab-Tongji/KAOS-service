@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +21,9 @@ public class Login {
     @Autowired
     MongoTemplate mongoTemplate;
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
-    public void doLogin(HttpServletRequest request, HttpServletResponse response)
+    public void doLogin(@RequestParam(value = "username")String username,
+                        @RequestParam(value = "password")String password, HttpServletResponse response)
             throws IOException,ServletException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
         Criteria criteria = new Criteria();
         criteria.andOperator(Criteria.where("username").is(username),Criteria.where("password").is(password));
         response.setContentType("text/html;charset=utf-8");

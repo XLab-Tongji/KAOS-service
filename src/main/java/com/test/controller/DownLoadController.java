@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +28,13 @@ public class DownLoadController {
 
 
     @RequestMapping(value = "/template/{templateID}" ,method = RequestMethod.POST)
-    public void getResults(HttpServletRequest request,
+    public void getResults(@RequestParam(value = "jsname")String jsonName,
+                           @RequestParam(value = "jsonStr")String jsonGet,
                            HttpServletResponse response,@PathVariable String templateID)
             throws ServletException, IOException, TemplateException {
         System.out.println("Find department with ID: " + templateID);
-        String jsonName=request.getParameter("jsname");
-        String jsonGet=request.getParameter("jsonStr");
+//        String jsonName=request.getParameter("jsname");
+//        String jsonGet=request.getParameter("jsonStr");
         String usefulness = jsonGet.substring(1,jsonGet.length()-1);
 
         System.out.println(usefulness);

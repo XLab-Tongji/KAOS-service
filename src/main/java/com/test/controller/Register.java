@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +22,10 @@ public class Register {
     MongoTemplate mongoTemplate;
 
     @RequestMapping(value = "/register" ,method = RequestMethod.POST)
-    public void doRegister(HttpServletRequest request, HttpServletResponse response)
+    public void doRegister(@RequestParam(value = "username")String username,
+                           @RequestParam(value = "password")String password,
+                           HttpServletResponse response)
             throws IOException,ServletException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
         System.out.println(username);
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));

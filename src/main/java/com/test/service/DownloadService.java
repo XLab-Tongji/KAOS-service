@@ -125,7 +125,7 @@ public class DownloadService {
             String flag;
             if(job.has("-flag ")) {
                 flag=job.getString("-flag ");
-                if (flag.equals("goal")) {
+                if (flag.equals("goal ")) {
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
                     if (job.has("-usecaseDiscription ")) {
@@ -169,7 +169,7 @@ public class DownloadService {
                     //goalModelRepository.save(goalModel);
 
                     //System.out.println(content);
-                } else if (flag.equals("requirement")) {
+                } else if (flag.equals("requirement ")) {
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
                     if (job.has("-basicEventFlow ")) {
@@ -210,7 +210,7 @@ public class DownloadService {
                     }
                     content = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
                     //System.out.println(content);
-                } else if (!flag.equals("ellipse")){
+                } else if (!flag.equals("ellipse ")){
                     String value = job.getString("-value ");
                     Map<String, Object> model = new HashMap<String, Object>();
                     if (job.has("-gedetail ")) {

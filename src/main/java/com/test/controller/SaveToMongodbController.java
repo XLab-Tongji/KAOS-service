@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
@@ -27,16 +28,20 @@ public class SaveToMongodbController {
 
     @RequestMapping(value = "/save" ,method = RequestMethod.POST)
     @ResponseBody
-    public void save(HttpServletRequest request,
+    public void save(@RequestParam(value = "jsname")String jsonName,
+                                     @RequestParam(value = "jsonStr")String jsonGet,
+                                     @RequestParam(value = "myname")String myName,
+                                     @RequestParam(value = "mytitle")String title,
                                      HttpServletResponse response , Model model)
             throws ServletException, IOException{
-        String jsonName=request.getParameter("jsname");
-        String jsonGet=request.getParameter("jsonStr");
-        String myName=request.getParameter("myname");
-        String title=request.getParameter("mytitle");
+//        String jsonName=request.getParameter("jsname");
+//        String jsonGet=request.getParameter("jsonStr");
+//        String myName=request.getParameter("myname");
+//        String title=request.getParameter("mytitle");
 
         System.out.println(jsonName);
         System.out.println(jsonGet);
+
         KaoserFile jsoninfo=new KaoserFile();
         jsoninfo.setName(jsonName);
         jsoninfo.setJsonStr(jsonGet);

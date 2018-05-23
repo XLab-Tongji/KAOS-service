@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,9 +20,9 @@ public class ServletDownloadController extends HttpServlet {
     }
 
     @RequestMapping(value = "/ServletDownload",method = RequestMethod.POST)
-    public void doDownload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doDownload(@RequestParam(value = "fileName")String fileName, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("ajax download file");
-        String fileName = request.getParameter("fileName");
+        //String fileName = request.getParameter("fileName");
         String myPath = ResourceUtils.getURL("src").getPath()+"main/resources/templates/files";
         File file1 = new File(myPath+"/md/"+fileName+".md");
         String result;

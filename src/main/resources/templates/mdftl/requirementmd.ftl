@@ -1,19 +1,25 @@
-### Use Case: ${value}
+<#--### Use Case: ${value}-->
 
-#### BasicEventFlow
+<#--#### BasicEventFlow-->
 
-${basicEventFlow}
+<#--${basicEventFlow}-->
 
-#### AddtionEventFlow
+<#--#### AddtionEventFlow-->
 
-${addtionEventFlow}
+<#--${addtionEventFlow}-->
 
-#### BusinessRule
+<#--#### BusinessRule-->
 
-${businessRule}
+<#--${businessRule}-->
 
-#### NonFunctionalRule
+<#--#### NonFunctionalRule-->
 
-${nonFunctionalRule}
+<#--${nonFunctionalRule}-->
 
 
+|RequestName|${value}|
+|:-|:-|
+|BasicEventFlow|${basicEventFlow}|
+|AddtionEventFlow|${addtionEventFlow}|
+|BusinessRule|${businessRule}|
+|NonFunctionalRule|${nonFunctionalRule}|

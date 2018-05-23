@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
@@ -29,9 +30,9 @@ public class ImportFromMongo {
 //        System.out.println(kaoserFiles);
 //
 //    }
-    public void find(HttpServletRequest request, HttpServletResponse response)
+    public void find(@RequestParam(value = "myname")String myName, HttpServletResponse response)
                 throws ServletException, IOException{
-        String myName = request.getParameter("myname");
+
 
         JSONArray jsonArray = findBymyNameService.find(myName);
 
