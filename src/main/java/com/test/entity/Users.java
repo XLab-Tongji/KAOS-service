@@ -8,6 +8,13 @@ public class Users {
         return username;
     }
 
+    public Users(){}
+
+    public Users(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }

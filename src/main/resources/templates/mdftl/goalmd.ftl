@@ -1,22 +1,11 @@
-### Use Case: ${value}
+### [Goal ${index}]${value}
 
-#### Description
+- Description:${usecaseDescription}
 
-${usecaseDiscription}
+- RefinesTo:${RefinesTo}
 
-#### Participants
+- RefinedBy:${RefinedBy}
 
-${participant}
+- Obstacle:${Obstructs}
 
-#### Pre-condition (Optional)
-
-${preCondition}
-
-#### Post-condition (Optional)
-
-${aftCondition}
-
-
-
-
-
+- Resolves:${Resolves}

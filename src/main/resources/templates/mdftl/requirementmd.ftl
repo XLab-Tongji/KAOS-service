@@ -1,25 +1,4 @@
-<#--### Use Case: ${value}-->
-
-<#--#### BasicEventFlow-->
-
-<#--${basicEventFlow}-->
-
-<#--#### AddtionEventFlow-->
-
-<#--${addtionEventFlow}-->
-
-<#--#### BusinessRule-->
-
-<#--${businessRule}-->
-
-<#--#### NonFunctionalRule-->
-
-<#--${nonFunctionalRule}-->
-
-
-|RequestName|${value}|
-|:-|:-|
-|BasicEventFlow|${basicEventFlow}|
-|AddtionEventFlow|${addtionEventFlow}|
-|BusinessRule|${businessRule}|
-|NonFunctionalRule|${nonFunctionalRule}|
+### [Req ${index}]${value}
+- RefinesTo:${RefinesToReq}
+- Description:${Description}
+- agents:${agents}

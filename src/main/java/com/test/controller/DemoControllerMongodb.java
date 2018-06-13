@@ -2,7 +2,10 @@ package com.test.controller;
 
 import com.test.entity.DemoInfo;
 import com.test.repository.DemoInfoRepository;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,8 +15,9 @@ public class DemoControllerMongodb {
     @Autowired
     private DemoInfoRepository demoInfoRepository;
 
-    @RequestMapping("hello")
+    @GetMapping(value = "hello")
     public String hello(){
+        System.out.println("ios");
         return "hello world!";
     }
 
@@ -46,5 +50,12 @@ public class DemoControllerMongodb {
     @RequestMapping("findByName")
     public DemoInfo findByName(String name){
         return demoInfoRepository.findByName(name);
+    }
+
+    @RequestMapping("hoo")
+    public JSONObject helo(){
+        System.out.println("hello");
+        String string = "{'hello':'hello'}";
+        return JSONObject.fromObject(string);
     }
 }

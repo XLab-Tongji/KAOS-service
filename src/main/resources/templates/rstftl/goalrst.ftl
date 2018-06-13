@@ -1,23 +1,20 @@
 ::::::::::::::::
-Usecase:${value}
+[Goal ${index}]${value}
 ::::::::::::::::
 '''''''''''
 Description
 '''''''''''
-${usecaseDiscription}
+${usecaseDescription}
 
-''''''''''''
-Participants
-''''''''''''
-${participant}
-
-''''''''''''''''''''''''
-Pre-condition (Optional)
-''''''''''''''''''''''''
-${preCondition}
-
+RefinesTo
 '''''''''''''''''''''''''
-Post-condition (Optional)
+${RefinesTo}
 '''''''''''''''''''''''''
-${aftCondition}
+RefinedBy
+'''''''''''''''''''''''''
+${RefinedBy}
+'''''''''''''''''''''''''
+Obstacle
+'''''''''''''''''''''''''
+${obstacle}
 

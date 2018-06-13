@@ -54,7 +54,8 @@ public class DownloadService {
     }
 
     /**
-     * json处理，取出mxCell的值（类型为json数组）
+     * json处理，取出mxCell的值（类型为json数组），从id=2的位置开始
+     * jsonArrayTemplate是可用的json数组，用于jsonOp类进行进一步操作
      * @param sb
      * @return
      */
@@ -119,6 +120,12 @@ public class DownloadService {
      */
     public String temp(JSONArray jsonArray,String result,String content,String jsonName,@PathVariable String templateID)
             throws IOException, TemplateException{
+        String sbReq = new String();
+        String sbGoal = new String();
+        String sbObs = new String();
+        int indexReq = 0;
+        int indexGoal = 0;
+        int indexObs = 0;
         for(int j=0;j<jsonArray.size();j++){
             JSONObject job=jsonArray.getJSONObject(j);
             System.out.println(job);
@@ -126,35 +133,43 @@ public class DownloadService {
             if(job.has("-flag ")) {
                 flag=job.getString("-flag ");
                 if (flag.equals("goal ")) {
+                    String sbOneGoal;
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
                     if (job.has("-usecaseDiscription ")) {
                         String usecaseDiscription = job.getString("-usecaseDiscription ");
-                        model.put("usecaseDiscription", usecaseDiscription);
+                        model.put("usecaseDescription", usecaseDiscription);
                     }
                     if (!job.has("-usecaseDiscription ")) {
-                        model.put("usecaseDiscription", "未定义");
+                        model.put("usecaseDescription", "未定义");
                     }
-                    if (job.has("-participant ")) {
-                        String participant = job.getString("-participant ");
-                        model.put("participant", participant);
+                    if (job.has("-RefinesTo ")) {
+                        String aftCondition = job.getString("-RefinesTo ");
+                        model.put("RefinesTo", aftCondition);
                     }
-                    if (!job.has("-participant ")) {
-                        model.put("participant", "未定义");
+                    if (!job.has("-RefinesTo ")) {
+                        model.put("RefinesTo", "未定义");
                     }
-                    if (job.has("-preCondition ")) {
-                        String preCondition = job.getString("-preCondition ");
-                        model.put("preCondition", preCondition);
+                    if (job.has("-RefinedBy ")) {
+                        String aftCondition = job.getString("-RefinedBy ");
+                        model.put("RefinedBy", aftCondition);
                     }
-                    if (!job.has("-preCondition ")) {
-                        model.put("preCondition", "未定义");
+                    if (!job.has("-RefinedBy ")) {
+                        model.put("RefinedBy", "未定义");
                     }
-                    if (job.has("-aftCondition ")) {
-                        String aftCondition = job.getString("-aftCondition ");
-                        model.put("aftCondition", aftCondition);
+                    if (job.has("-Obstructs ")) {
+                        String aftCondition = job.getString("-Obstructs ");
+                        model.put("Obstructs", aftCondition);
                     }
-                    if (!job.has("-aftCondition ")) {
-                        model.put("aftCondition", "未定义");
+                    if (!job.has("-Obstructs ")) {
+                        model.put("Obstructs", "未定义");
+                    }
+                    if (job.has("-Resolves ")) {
+                        String aftCondition = job.getString("-Resolves ");
+                        model.put("Resolves", aftCondition);
+                    }
+                    if (!job.has("-Resolves ")) {
+                        model.put("Resolves", "未定义");
                     }
                     model.put("value", value);
                     Template t = null;
@@ -164,41 +179,34 @@ public class DownloadService {
                     else {
                         t = configuration.getTemplate("rstftl/goalrst.ftl","UTF-8");
                     }
-                    content = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
-
-                    //goalModelRepository.save(goalModel);
-
-                    //System.out.println(content);
+                    indexGoal += 1;
+                    model.put("index",indexGoal);
+                    sbOneGoal = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                    sbGoal += sbOneGoal;
                 } else if (flag.equals("requirement ")) {
+                    String sbOneReq;
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
-                    if (job.has("-basicEventFlow ")) {
-                        String basicEventFlow = job.getString("-basicEventFlow ");
-                        model.put("basicEventFlow", basicEventFlow);
+                    if (job.has("-Description ")) {
+                        String nonFunctionalRule = job.getString("-Description ");
+                        model.put("Description", nonFunctionalRule);
                     }
-                    if (!job.has("-basicEventFlow ")) {
-                        model.put("basicEventFlow", "未定义");
+                    if (!job.has("-Description ")) {
+                        model.put("Description", "未定义");
                     }
-                    if (job.has("-addtionEventFlow ")) {
-                        String addtionEventFlow = job.getString("-addtionEventFlow ");
-                        model.put("addtionEventFlow", addtionEventFlow);
+                    if (job.has("-RefinesTo ")) {
+                        String refines = job.getString("-RefinesTo ");
+                        model.put("RefinesToReq", refines);
                     }
-                    if (!job.has("-addtionEventFlow ")) {
-                        model.put("addtionEventFlow", "未定义");
+                    if (!job.has("-RefinesTo ")) {
+                        model.put("RefinesToReq", "未定义");
                     }
-                    if (job.has("-businessRule ")) {
-                        String businessRule = job.getString("-businessRule ");
-                        model.put("businessRule", businessRule);
+                    if (job.has("-Agents ")) {
+                        String agents = job.getString("-Agents ");
+                        model.put("agents", agents);
                     }
-                    if (!job.has("-businessRule ")) {
-                        model.put("businessRule", "未定义");
-                    }
-                    if (job.has("-nonFunctionalRule ")) {
-                        String nonFunctionalRule = job.getString("-nonFunctionalRule ");
-                        model.put("nonFunctionalRule", nonFunctionalRule);
-                    }
-                    if (!job.has("-nonFunctionalRule ")) {
-                        model.put("nonFunctionalRule", "未定义");
+                    if (!job.has("-Agents ")) {
+                        model.put("agents", "未定义");
                     }
                     model.put("value", value);
                     Template t = null;
@@ -208,10 +216,15 @@ public class DownloadService {
                     else {
                         t = configuration.getTemplate("rstftl/requirementrst.ftl","UTF-8");
                     }
-                    content = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                    indexReq += 1;
+                    model.put("index",indexReq);
+                    sbOneReq = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                    sbReq += sbOneReq;
                     //System.out.println(content);
-                } else if (!flag.equals("ellipse ")){
+                } else if(flag.equals("obstacle ")){
+                    String sbOneObs;
                     String value = job.getString("-value ");
+
                     Map<String, Object> model = new HashMap<String, Object>();
                     if (job.has("-gedetail ")) {
                         String detail = job.getString("-gedetail ");
@@ -220,26 +233,64 @@ public class DownloadService {
                     if (!job.has("-gedetail ")) {
                         model.put("detail", "未定义");
                     }
+                    if (job.has("-Goal ")) {
+                        String detail = job.getString("-Goal ");
+                        model.put("Target", detail);
+                    }
+                    if (!job.has("-Goal ")) {
+                        model.put("Target", "未定义");
+                    }
                     model.put("value", value);
                     model.put("flag", flag);
 
                     Template t = null;
                     if(templateID.equals("md"))
                     {
-                        t = configuration.getTemplate("mdftl/othersmd.ftl","UTF-8");
+                        t = configuration.getTemplate("mdftl/obstacle.ftl","UTF-8");
                     }
                     else {
-                        t = configuration.getTemplate("rstftl/othersrst.ftl","UTF-8");
+                        t = configuration.getTemplate("rstftl/obstacle.ftl","UTF-8");
                     }
-                    content = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                    indexObs += 1;
+                    model.put("index",indexObs);
+                    sbOneObs = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                    //System.out.println(content);
+                    sbObs += sbOneObs;
+                }
+
+                else if (!flag.equals("ellipse ")){
+                    if(job.has("-value ")) {
+
+                        String value = job.getString("-value ");
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        if (job.has("-gedetail ")) {
+                            String detail = job.getString("-gedetail ");
+                            model.put("detail", detail);
+                        }
+                        if (!job.has("-gedetail ")) {
+                            model.put("detail", "未定义");
+                        }
+                        model.put("value", value);
+                        model.put("flag", flag);
+
+                        Template t = null;
+                        if (templateID.equals("md")) {
+                            t = configuration.getTemplate("mdftl/othersmd.ftl", "UTF-8");
+                        } else {
+                            t = configuration.getTemplate("rstftl/othersrst.ftl", "UTF-8");
+                        }
+                        content = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                    }
                     //System.out.println(content);
                 }
-                result += content;
+                //result += content;
             }
             else{
 
             }
         }
+        //System.out.println(sbReq);
+        result = result+sbGoal+sbObs+sbReq;
 
         return result;
     }

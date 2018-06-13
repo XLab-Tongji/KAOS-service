@@ -1,5 +1,3 @@
 ### Use Case: ${value}
 
-#### Detail
-
-${detail}
+- Detail:${detail}

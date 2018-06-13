@@ -22,14 +22,8 @@ public class ImportFromMongo {
 
     @Autowired
     FindByMynameService findBymyNameService;
+
     @RequestMapping(value = "importFromMongo",method = RequestMethod.GET)
-//    public void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException{
-//
-//        List<KaoserFile> kaoserFiles = find("wd");
-//        System.out.println(kaoserFiles);
-//
-//    }
     public void find(@RequestParam(value = "myname")String myName, HttpServletResponse response)
                 throws ServletException, IOException{
 

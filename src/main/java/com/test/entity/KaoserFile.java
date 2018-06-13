@@ -5,9 +5,19 @@ import org.springframework.data.annotation.Id;
 public class KaoserFile {
     @Id
     private String id;
+
+    /**
+     * 文件名
+     */
     private String name;
     private String jsonStr;
+    /**
+     * 作者名
+     */
     private String myname;
+    /**
+     * 项目名
+     */
     private String projectname;
 
     public String getProjectname() {
@@ -25,10 +35,11 @@ public class KaoserFile {
     public KaoserFile() {
     }
 
-    public KaoserFile(String name, String jsonStr, String myname) {
+    public KaoserFile(String name, String jsonStr, String myname,String projectname) {
         this.name = name;
         this.jsonStr = jsonStr;
         this.myname = myname;
+        this.projectname = projectname;
     }
 
     public void setMyname(String myname) {

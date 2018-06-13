@@ -36,10 +36,4 @@ public class Login {
             pw.print(-1);
         }
     }
-    @GetMapping("/hello")
-    public String printResult(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        String str = request.getParameter("name");
-        return "hello"+str;
-    }
 }
