@@ -5,6 +5,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ public class ServletDownloadController extends HttpServlet {
     public ServletDownloadController(){
         super();
     }
-
+    @ResponseBody
     @RequestMapping(value = "/ServletDownload",method = RequestMethod.POST)
     public void doDownload(@RequestParam(value = "fileName")String fileName, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("ajax download file");

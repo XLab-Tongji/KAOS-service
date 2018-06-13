@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class DownloadService {
+public class TemplateFileService {
     @Autowired
     freemarker.template.Configuration configuration;
 

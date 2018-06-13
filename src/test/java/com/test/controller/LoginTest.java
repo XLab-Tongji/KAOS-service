@@ -1,7 +1,8 @@
 package com.test.controller;
 
-import com.test.entity.Users;
-import com.test.repository.UsersRepository;
+import com.test.entity.User;
+import com.test.repository.UserRepository;
+import com.test.service.LoginService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,8 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
@@ -19,16 +18,19 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class LoginTest {
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private LoginService loginService;
     @Before
     public void doInit(){
-        usersRepository.deleteAll();
-        usersRepository.save(new Users("1","123456"));
-        usersRepository.save(new Users("2","123456"));
-        usersRepository.save(new Users("3","123456"));
+        userRepository.deleteAll();
+        userRepository.save(new User("1","123456"));
+        userRepository.save(new User("2","123456"));
+        userRepository.save(new User("3","123456"));
 
     }
 
@@ -39,12 +41,11 @@ public class LoginTest {
     public void doLoginTest(){
         String username = "4";
         String password = "123456";
-        Criteria criteria = new Criteria();
-        criteria.andOperator(Criteria.where("username").is(username),Criteria.where("password").is(password));
-        assertEquals("success",0,mongoTemplate.count(new Query(criteria),Users.class));
-        System.out.println("测试登录失败,用户名不存在--------------------");
+        String loginMsg = loginService.doLogin(username,password);
+        assertEquals("success","-1",loginMsg);
+        System.out.println("测试登录失败,用户名不存在-----------------------");
         System.out.println("测试登录失败,用户名不存在");
-        System.out.println("---------------------------------------- ");
+        System.out.println("--------------------------------------------");
     }
 
     /**
@@ -54,9 +55,8 @@ public class LoginTest {
     public void doLoginTest1(){
         String username = "3";
         String password = "1234567";
-        Criteria criteria = new Criteria();
-        criteria.andOperator(Criteria.where("username").is(username),Criteria.where("password").is(password));
-        assertEquals("success",0,mongoTemplate.count(new Query(criteria),Users.class));
+        String loginMsg = loginService.doLogin(username,password);
+        assertEquals("success","-1",loginMsg);
         System.out.println("测试登录失败,密码错误-----------------------");
         System.out.println("测试登录失败,密码错误");
         System.out.println("----------------------------------------");
@@ -69,9 +69,8 @@ public class LoginTest {
     public void doRegisterTest3(){
         String username = "3";
         String password = "123456";
-        Criteria criteria = new Criteria();
-        criteria.andOperator(Criteria.where("username").is(username),Criteria.where("password").is(password));
-        assertEquals("success",1,mongoTemplate.count(new Query(criteria),Users.class));
+        String loginMsg = loginService.doLogin(username,password);
+        assertEquals("success","1",loginMsg);
         System.out.println("测试登录成功------------------------------ ");
         System.out.println("测试登录成功");
         System.out.println("----------------------------------------");
@@ -79,6 +78,6 @@ public class LoginTest {
 
     @After
     public void doAfter(){
-        usersRepository.deleteAll();
+        userRepository.deleteAll();
     }
 }

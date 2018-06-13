@@ -1,6 +1,6 @@
 package com.test.controller;
 
-import com.test.service.DownloadService;
+import com.test.service.TemplateFileService;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,12 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Controller
-public class DownLoadController {
+public class TemplateFileController {
     @Autowired
     freemarker.template.Configuration configuration;
 
@@ -21,13 +19,14 @@ public class DownLoadController {
     MongoTemplate mongoTemplateModel;
 
     @Autowired
-    DownloadService downloadService;
+    TemplateFileService templateFileService;
 
-
+    private String result;
+    @ResponseBody
     @RequestMapping(value = "/template/{templateID}" ,method = RequestMethod.POST)
-    public void getResults(@RequestParam(value = "jsname")String jsonName,
+    public String getResults(@RequestParam(value = "jsname")String jsonName,
                            @RequestParam(value = "jsonStr")String jsonGet,
-                           HttpServletResponse response,@PathVariable String templateID)
+                           @PathVariable String templateID)
             throws ServletException, IOException, TemplateException {
         System.out.println("Find department with ID: " + templateID);
 //        String jsonName=request.getParameter("jsname");
@@ -36,15 +35,10 @@ public class DownLoadController {
 
         System.out.println(usefulness);
 
-        String results = downloadService.getResult(jsonName,usefulness,templateID);
+        this.result = templateFileService.getResult(jsonName,usefulness,templateID);
 
-        response.setContentType("text/html;charset=utf-8");
+        System.out.println(result);
 
-        System.out.println(results);
-
-        response.getWriter().print(results);
-        response.getWriter().flush();
-        response.getWriter().close();
+        return result;
     }
-
 }
