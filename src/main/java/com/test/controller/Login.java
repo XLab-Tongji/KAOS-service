@@ -13,6 +13,7 @@ public class Login {
 
     @Autowired
     private LoginService loginService;
+
     @ResponseBody
     @RequestMapping(value = "/login" ,method = RequestMethod.POST)
     public String doLogin(@RequestParam(value = "username")String username,
