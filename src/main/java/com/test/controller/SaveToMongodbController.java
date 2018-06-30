@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -60,10 +61,14 @@ public class SaveToMongodbController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/addNewFile")
+    @RequestMapping("addNewFile")
     public Map<String,Object> addNewFile(@RequestParam("username")String username,
                                          @RequestParam("projectName")String projectName,
                                          @RequestParam("title")String title){
-        return saveToMongodbService.addNewFile(username,projectName,title);
+        Map<String,Object> map = new HashMap<>();
+        KaoserFile newFile =  saveToMongodbService.addNewFile(username,projectName,title);
+        map.put("kaosfileId",newFile.getId());
+        map.put("msg","success");
+        return map;
     }
 }

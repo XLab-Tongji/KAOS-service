@@ -54,17 +54,16 @@ public class SaveToMongodbService {
         return resp;
     }
 
-    public Map<String,Object> addNewFile(String username,
+    public KaoserFile addNewFile(String username,
                                          String projectName,
                                          String title){
-        Map<String,Object> map = new HashMap<>();
         KaoserFile jsoninfo=new KaoserFile();
         jsoninfo.setName(title);
         jsoninfo.setJsonStr("");
         jsoninfo.setMyname(username);
         jsoninfo.setProjectname(projectName);
         mongoTemplate.save(jsoninfo);
-        map.put("msg","保存成功");
-        return map;
+
+        return jsoninfo;
     }
 }
