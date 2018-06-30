@@ -22,6 +22,17 @@ public class TemplateFileController {
     TemplateFileService templateFileService;
 
     private String result;
+
+    /**
+     * 生成文档
+     * @param jsonName
+     * @param jsonGet
+     * @param templateID
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     * @throws TemplateException
+     */
     @ResponseBody
     @RequestMapping(value = "/template/{templateID}" ,method = RequestMethod.POST)
     public String getResults(@RequestParam(value = "jsname")String jsonName,

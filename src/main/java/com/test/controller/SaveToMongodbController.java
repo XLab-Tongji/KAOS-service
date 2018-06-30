@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
+import java.util.Map;
 
 @Controller
 public class SaveToMongodbController {
@@ -22,18 +23,47 @@ public class SaveToMongodbController {
     @Autowired
     private SaveToMongodbService saveToMongodbService;
 
+    /**
+     * 新增或者更新文档
+     * @param id
+     * @param title
+     * @param jsonGet
+     * @param myName
+     * @param projectName
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/save" ,method = RequestMethod.POST)
     @ResponseBody
-    public String save(@RequestParam(value = "jsname")String jsonName,
-                                     @RequestParam(value = "jsonStr")String jsonGet,
-                                     @RequestParam(value = "myname")String myName,
-                                     @RequestParam(value = "mytitle")String title)
+    public String save(@RequestParam(value = "id")String id,
+            @RequestParam(value = "title")String title,
+                       @RequestParam(value = "jsonStr")String jsonGet,
+                       @RequestParam(value = "myname")String myName,
+                       @RequestParam(value = "projectName")String projectName)
             throws IOException{
-
-        return saveToMongodbService.doSaveToMongodb(jsonName,jsonGet,myName,title);
+        if(id.equals("")){
+            return saveToMongodbService.doSaveToMongodb(title,jsonGet,myName,projectName);
+        }else{
+            return saveToMongodbService.updateToMongo(id,title,jsonGet);
+        }
     }
 
     public KaoserFile findByName(String name){
         return kaoserFileRepository.findByName(name);
+    }
+
+    /**
+     * 新建文档
+     * @param username
+     * @param projectName
+     * @param title
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addNewFile")
+    public Map<String,Object> addNewFile(@RequestParam("username")String username,
+                                         @RequestParam("projectName")String projectName,
+                                         @RequestParam("title")String title){
+        return saveToMongodbService.addNewFile(username,projectName,title);
     }
 }

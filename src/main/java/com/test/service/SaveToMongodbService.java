@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
-
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class SaveToMongodbService {
@@ -17,20 +19,20 @@ public class SaveToMongodbService {
     private KaoserFileRepository kaoserFileRepository;
     @Autowired
     MongoTemplate mongoTemplate;
-    public String doSaveToMongodb(String jsonName,String jsonGet,String myName,String title)throws IOException {
-        System.out.println(jsonName);
+    public String doSaveToMongodb(String title,String jsonGet,String myName,String projectName)throws IOException {
+        System.out.println(title);
         System.out.println(jsonGet);
 
         KaoserFile jsoninfo=new KaoserFile();
-        jsoninfo.setName(jsonName);
+        jsoninfo.setName(title);
         jsoninfo.setJsonStr(jsonGet);
         jsoninfo.setMyname(myName);
-        jsoninfo.setProjectname(title);
+        jsoninfo.setProjectname(projectName);
 
         String resp="";
         System.out.println(ResourceUtils.getURL("classpath").getPath());
         Criteria criatira = new Criteria();
-        criatira.andOperator(Criteria.where("myname").is(myName), Criteria.where("projectname").is(title),Criteria.where("name").is(jsonName));
+        criatira.andOperator(Criteria.where("myname").is(myName), Criteria.where("projectname").is(title),Criteria.where("name").is(title));
         //mongoTemplate.find(new Query(criatira), KaoserFile.class);
         if(mongoTemplate.count(new Query(criatira), KaoserFile.class)>0){
             resp = "{\"name\":\"fail\"}";
@@ -41,5 +43,28 @@ public class SaveToMongodbService {
         }
         System.out.println(resp);
         return resp;
+    }
+
+    public String updateToMongo(String id,String name,String jsonStr){
+        Query query=new Query(Criteria.where("_id").is(id));
+        Update update = Update.update("name", name).set("jsonStr",jsonStr);
+        mongoTemplate.updateMulti(query, update, KaoserFile.class);
+        String resp = "";
+        resp = "{\"name\":\"success\"}";
+        return resp;
+    }
+
+    public Map<String,Object> addNewFile(String username,
+                                         String projectName,
+                                         String title){
+        Map<String,Object> map = new HashMap<>();
+        KaoserFile jsoninfo=new KaoserFile();
+        jsoninfo.setName(title);
+        jsoninfo.setJsonStr("");
+        jsoninfo.setMyname(username);
+        jsoninfo.setProjectname(projectName);
+        mongoTemplate.save(jsoninfo);
+        map.put("msg","保存成功");
+        return map;
     }
 }

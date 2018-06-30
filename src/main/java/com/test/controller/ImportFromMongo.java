@@ -1,18 +1,20 @@
 package com.test.controller;
 
+import com.test.entity.KaoserFile;
 import com.test.service.FindByMynameService;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class ImportFromMongo {
@@ -25,7 +27,6 @@ public class ImportFromMongo {
     @RequestMapping(value = "importFromMongo",method = RequestMethod.GET)
     public void find(@RequestParam(value = "myname")String myName, HttpServletResponse response)
                 throws ServletException, IOException{
-
 
         JSONArray jsonArray = findBymyNameService.find(myName);
 
@@ -41,4 +42,14 @@ public class ImportFromMongo {
         return "hello world!";
     }
 
+    /**
+     * 通过id查找文档
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("findFileById")
+    public Map<String,Object> findKaosFile(@RequestParam(value = "id")String id){
+        return findBymyNameService.findKaosFileById(id);
+    }
 }

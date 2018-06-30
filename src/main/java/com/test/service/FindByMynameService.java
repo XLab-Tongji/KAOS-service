@@ -9,7 +9,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FindByMynameService {
@@ -21,5 +23,15 @@ public class FindByMynameService {
         List<KaoserFile> kaoserFiles = mongoTemplate.find(query,KaoserFile.class);
         JSONArray jsonArray = JSONArray.fromObject(kaoserFiles);
         return jsonArray;
+    }
+
+    public Map<String,Object> findKaosFileById(String id){
+        System.out.println(id);
+        Map<String,Object> map = new HashMap<>();
+        Query query=new Query(Criteria.where("_id").is(id));
+        KaoserFile kaoserFile = mongoTemplate.findById(id,KaoserFile.class);
+        map.put("kaoserFile",kaoserFile);
+
+        return map;
     }
 }

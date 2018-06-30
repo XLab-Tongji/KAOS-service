@@ -19,6 +19,14 @@ public class ServletDownloadController extends HttpServlet {
     public ServletDownloadController(){
         super();
     }
+
+    /**
+     * 下载文档接口
+     * @param fileName
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping(value = "/ServletDownload",method = RequestMethod.POST)
     public void doDownload(@RequestParam(value = "fileName")String fileName, HttpServletResponse response) throws ServletException, IOException {
