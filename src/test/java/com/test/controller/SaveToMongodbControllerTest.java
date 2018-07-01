@@ -30,6 +30,7 @@ public class SaveToMongodbControllerTest {
     private SaveToMongodbService saveToMongodbService;
     @Before
     public void doInit(){
+        kaoserFileRepository.deleteAll();
         kaoserFileRepository.save(new KaoserFile("1","2","2","1"));
         kaoserFileRepository.save(new KaoserFile("1","2","3","2"));
         kaoserFileRepository.save(new KaoserFile("3","3","6","1"));
@@ -37,7 +38,7 @@ public class SaveToMongodbControllerTest {
     }
 
     /**
-     * 测试保存失败，相同作者相同项目相同文件名
+     * 相同作者相同项目相同文件名
      */
     @Test
     public void doSaveTestFailBySameProjectAndSameUserAndSameFileName() throws IOException {
@@ -53,15 +54,15 @@ public class SaveToMongodbControllerTest {
     }
 
     /**
-     * 测试保存成功，相同作者不同项目相同文件名
+     * 相同作者相同项目不同文件名
      */
     @Test
     public void doSaveTestSuccessBySameProjectAndSameUserAndDifferentFileName() throws IOException {
-        String name = "2";
+        String name = "6";
         String myname = "2";
         String projectname = "1";
         String jsonstr = "4";
-        String msg = saveToMongodbService.doSaveToMongodb(projectname,jsonstr,myname,name);
+        String msg = saveToMongodbService.doSaveToMongodb(name,jsonstr,myname,projectname);
         assertEquals("success","{\"name\":\"success\"}",msg);
         System.out.println("测试保存成功，相同作者相同项目不同文件名--------------------- ");
         System.out.println("测试保存成功，相同作者相同项目不同文件名");
@@ -77,7 +78,7 @@ public class SaveToMongodbControllerTest {
         String myname = "2";
         String projectname = "2";
         String jsonstr = "4";
-        String msg = saveToMongodbService.doSaveToMongodb(projectname,jsonstr,myname,name);
+        String msg = saveToMongodbService.doSaveToMongodb(name,jsonstr,myname,projectname);
         assertEquals("success","{\"name\":\"success\"}",msg);
         System.out.println("测试保存成功，相同作者不同项目相同文件名--------------------- ");
         System.out.println("测试保存成功，相同作者不同项目相同文件名");
@@ -102,6 +103,7 @@ public class SaveToMongodbControllerTest {
 
     @After
     public void doAfter(){
-        kaoserFileRepository.deleteAll();
+
+
     }
 }

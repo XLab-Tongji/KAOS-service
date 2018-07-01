@@ -77,6 +77,7 @@ public class LoginTest {
 
     @After
     public void doAfter(){
-        userRepository.deleteAll();
+
+
     }
 }

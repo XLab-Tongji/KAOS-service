@@ -120,6 +120,7 @@ public class RegisterTest {
 
     @After
     public void doAfter(){
-        userRepository.deleteAll();
+
+
     }
 }

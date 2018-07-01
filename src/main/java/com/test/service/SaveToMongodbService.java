@@ -30,7 +30,7 @@ public class SaveToMongodbService {
         jsoninfo.setProjectname(projectName);
 
         String resp="";
-        System.out.println(ResourceUtils.getURL("classpath").getPath());
+        //System.out.println(ResourceUtils.getURL("classpath").getPath());
         Criteria criatira = new Criteria();
         criatira.andOperator(Criteria.where("myname").is(myName), Criteria.where("projectname").is(title),Criteria.where("name").is(title));
         //mongoTemplate.find(new Query(criatira), KaoserFile.class);
