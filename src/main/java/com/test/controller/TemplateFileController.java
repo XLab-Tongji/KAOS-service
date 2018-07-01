@@ -39,6 +39,7 @@ public class TemplateFileController {
                            @RequestParam(value = "jsonStr")String jsonGet,
                            @PathVariable String templateID)
             throws ServletException, IOException, TemplateException {
+        System.out.println(jsonGet);
         System.out.println("Find department with ID: " + templateID);
 //        String jsonName=request.getParameter("jsname");
 //        String jsonGet=request.getParameter("jsonStr");

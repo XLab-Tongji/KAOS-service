@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -24,6 +23,13 @@ public class ImportFromMongo {
     @Autowired
     FindByMynameService findBymyNameService;
 
+    /**
+     * 从数据看导入
+     * @param myName
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @RequestMapping(value = "importFromMongo",method = RequestMethod.GET)
     public void find(@RequestParam(value = "myname")String myName, HttpServletResponse response)
                 throws ServletException, IOException{

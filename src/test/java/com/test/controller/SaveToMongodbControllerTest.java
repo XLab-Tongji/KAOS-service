@@ -30,7 +30,6 @@ public class SaveToMongodbControllerTest {
     private SaveToMongodbService saveToMongodbService;
     @Before
     public void doInit(){
-        kaoserFileRepository.deleteAll();
         kaoserFileRepository.save(new KaoserFile("1","2","2","1"));
         kaoserFileRepository.save(new KaoserFile("1","2","3","2"));
         kaoserFileRepository.save(new KaoserFile("3","3","6","1"));

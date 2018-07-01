@@ -28,7 +28,6 @@ public class RegisterTest {
     private RegisterService registerService;
     @Before
     public void doInit(){
-        userRepository.deleteAll();
         userRepository.save(new User("123456","123456"));
         userRepository.save(new User("234567","123456"));
     }

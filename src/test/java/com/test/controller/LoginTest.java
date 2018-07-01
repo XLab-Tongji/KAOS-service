@@ -27,7 +27,6 @@ public class LoginTest {
     private LoginService loginService;
     @Before
     public void doInit(){
-        userRepository.deleteAll();
         userRepository.save(new User("1","123456"));
         userRepository.save(new User("2","123456"));
         userRepository.save(new User("3","123456"));

@@ -24,9 +24,7 @@ public class ImportFromMongoTest {
     private KaoserFileRepository kaoserFileRepository;
     @Before
     public void initData(){
-        if(kaoserFileRepository.findAll().size()>0){
-            kaoserFileRepository.deleteAll();
-        }
+
         String jsonGet = "{\"mxGraphModel \":{\"root \": {\"mxCell \":[{ \"-id\": \"0\" },{\"-id\": \"1\",\"-parent\": \"0\"},{\"-id\": \"2\",\"-value\": \"d\",\"-style\":\"shape=goal;whiteSpace=wrap;html=1;top=0;bottom=0;fillColor=#DAE8FC;strokeColor=#0066CC;fontSize=18\",\"-vertex\": \"1\",\"-parent\": \"1\",\"-flag\": \"goal\",\"mxGeometry\": {\"-x\": \"130\",\"-y\": \"110\",\"-width\": \"180\",\"-height\": \"40\",\"-as\": \"geometry\"}}]}}}";
         kaoserFileRepository.save(new KaoserFile("1",jsonGet,"2","1"));
         kaoserFileRepository.save(new KaoserFile("2",jsonGet,"2","2"));

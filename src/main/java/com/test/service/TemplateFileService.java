@@ -49,7 +49,7 @@ public class TemplateFileService {
         String results=content;
         results=temp(jsonArrayTemplate,results,content,jsonName,templateID);
 
-        WriteStringToFile(jsonName,results,templateID);
+        //WriteStringToFile(jsonName,results,templateID);
         return results;
     }
 
