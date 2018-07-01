@@ -5,9 +5,11 @@ import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Controller
@@ -21,7 +23,7 @@ public class TemplateFileController {
     @Autowired
     TemplateFileService templateFileService;
 
-    private String result;
+    private String result = "";
 
     /**
      * 生成文档
@@ -53,4 +55,22 @@ public class TemplateFileController {
 
         return result;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/ServletDownload",method = RequestMethod.POST)
+    public void doDownload(@RequestParam(value = "fileName")String fileName, HttpServletResponse response) throws ServletException, IOException {
+
+
+        response.setHeader("Content-Disposition","attachment;filename=" + fileName + ".md");
+
+        response.setContentType("application/octet-stream");
+
+        response.setContentLength((int) result.length());
+
+        PrintWriter pw = response.getWriter();
+        pw.print(result);
+        System.out.println(result);
+
+    }
+
 }

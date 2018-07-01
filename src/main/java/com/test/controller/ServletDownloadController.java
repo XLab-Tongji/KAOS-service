@@ -28,7 +28,7 @@ public class ServletDownloadController extends HttpServlet {
      * @throws IOException
      */
     @ResponseBody
-    @RequestMapping(value = "/ServletDownload",method = RequestMethod.POST)
+    @RequestMapping(value = "/ServletDownload1",method = RequestMethod.POST)
     public void doDownload(@RequestParam(value = "fileName")String fileName, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("ajax download file");
         //String fileName = request.getParameter("fileName");

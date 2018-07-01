@@ -21,6 +21,8 @@ public class TemplateFileService {
     @Autowired
     freemarker.template.Configuration configuration;
 
+    private String template = "";
+
     @Autowired
     MongoTemplate mongoTemplateModel;
     @Transactional
@@ -49,6 +51,7 @@ public class TemplateFileService {
         String results=content;
         results=temp(jsonArrayTemplate,results,content,jsonName,templateID);
 
+        template = results;
         //WriteStringToFile(jsonName,results,templateID);
         return results;
     }
