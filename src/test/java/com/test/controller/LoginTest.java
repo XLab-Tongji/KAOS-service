@@ -48,7 +48,7 @@ public class LoginTest {
     }
 
     /**
-     * 测试登录失败,密码错误
+     * 密码错误
      */
     @Test
     public void doLoginTest1(){
