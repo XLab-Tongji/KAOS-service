@@ -28,6 +28,7 @@ public class RegisterTest {
     private RegisterService registerService;
     @Before
     public void doInit(){
+        userRepository.deleteAll();
         userRepository.save(new User("123456","123456"));
         userRepository.save(new User("234567","123456"));
     }
@@ -120,9 +121,8 @@ public class RegisterTest {
 
     @After
     public void doAfter(){
-        User user1 = userRepository.findByUsername("456789");
-        userRepository.delete(user1);
-        User user2 = userRepository.findByUsername("234567");
-        userRepository.delete(user2);
+        userRepository.deleteAll();
+        userRepository.save(new User("123456","123456"));
+
     }
 }
