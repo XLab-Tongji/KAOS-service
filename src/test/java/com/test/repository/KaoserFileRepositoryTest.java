@@ -2,6 +2,7 @@ package com.test.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import com.test.entity.KaoserFile;
 import com.test.init.DoInitAndDestory;
+import com.test.service.SaveToMongodbService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,8 @@ import static org.junit.Assert.*;
 public class KaoserFileRepositoryTest {
     @Autowired
     private KaoserFileRepository kaoserFileRepository;
-
+    @Autowired
+    private SaveToMongodbService saveToMongodbService;
     @Before
     public void doInit(){
         kaoserFileRepository.deleteAll();
@@ -71,5 +73,7 @@ public class KaoserFileRepositoryTest {
     @After
     public void doAfter(){
         kaoserFileRepository.deleteAll();
+        saveToMongodbService.addNewFile("123456","new-project","newFile");
+
     }
 }

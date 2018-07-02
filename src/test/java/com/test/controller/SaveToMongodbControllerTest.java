@@ -103,7 +103,8 @@ public class SaveToMongodbControllerTest {
 
     @After
     public void doAfter(){
-
+        kaoserFileRepository.deleteAll();
+        saveToMongodbService.addNewFile("123456","new-project","newFile");
 
     }
 }
