@@ -42,6 +42,9 @@ public class TemplateFileService {
         if(templateID.equals("md")){
             myname = configuration.getTemplate("mdftl/namemd.ftl","UTF-8");
         }
+        else if(templateID.equals("rela")){
+            myname = configuration.getTemplate("mdftl/relanamemd.ftl","UTF-8");
+        }
         else {
             myname = configuration.getTemplate("rstftl/namerst.ftl","UTF-8");
         }
@@ -126,9 +129,11 @@ public class TemplateFileService {
         String sbReq = new String();
         String sbGoal = new String();
         String sbObs = new String();
+        String sbRes = new String();
         int indexReq = 0;
         int indexGoal = 0;
         int indexObs = 0;
+        int indexRes = 0;
         for(int j=0;j<jsonArray.size();j++){
             JSONObject job=jsonArray.getJSONObject(j);
             System.out.println(job);
@@ -176,7 +181,7 @@ public class TemplateFileService {
                     }
                     model.put("value", value);
                     Template t = null;
-                    if(templateID.equals("md")){
+                    if(templateID.equals("md") || templateID.equals("rela")){
                         t = configuration.getTemplate("mdftl/goalmd.ftl","UTF-8");
                     }
                     else {
@@ -213,7 +218,7 @@ public class TemplateFileService {
                     }
                     model.put("value", value);
                     Template t = null;
-                    if(templateID.equals("md")){
+                    if(templateID.equals("md") || templateID.equals("rela")){
                         t = configuration.getTemplate("mdftl/requirementmd.ftl","UTF-8");
                     }
                     else {
@@ -224,7 +229,42 @@ public class TemplateFileService {
                     sbOneReq = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
                     sbReq += sbOneReq;
                     //System.out.println(content);
-                } else if(flag.equals("obstacle ")){
+                }
+                else if (flag.equals("resource ")) {
+                    if(job.has("-value ")) {
+                        String sbOneRes;
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        String value = job.getString("-value ");
+                        if (job.has("-resourType ")) {
+                            String resourceTypes = job.getString("-resourType ");
+                            model.put("resourType",resourceTypes);
+                        }
+                        if (!job.has("-resourType ")) {
+                            model.put("resourType", "未定义");
+                        }
+                        if (job.has("-RelateTo ")) {
+                            String _relates = job.getString("-RelateTo ");
+                            String relates = _relates.replace("</br>","---");
+                            model.put("RelateTo", relates);
+                        }
+                        if (!job.has("-RelateTo ")) {
+                            model.put("RelateTo", "未定义");
+                        }
+                        model.put("value", value);
+                        Template t = null;
+                        if (templateID.equals("md") || templateID.equals("rela")) {
+                            t = configuration.getTemplate("mdftl/resourcemd.ftl", "UTF-8");
+                        }
+                        else {
+                            t = configuration.getTemplate("rstftl/resourcerst.ftl", "UTF-8");
+                        }
+                        indexRes += 1;
+                        model.put("index", indexRes);
+                        sbOneRes = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbRes += sbOneRes;
+                    }
+                }
+                else if(flag.equals("obstacle ")){
                     String sbOneObs;
                     String value = job.getString("-value ");
 
@@ -247,7 +287,7 @@ public class TemplateFileService {
                     model.put("flag", flag);
 
                     Template t = null;
-                    if(templateID.equals("md"))
+                    if(templateID.equals("md") || templateID.equals("rela"))
                     {
                         t = configuration.getTemplate("mdftl/obstacle.ftl","UTF-8");
                     }
@@ -277,7 +317,7 @@ public class TemplateFileService {
                         model.put("flag", flag);
 
                         Template t = null;
-                        if (templateID.equals("md")) {
+                        if (templateID.equals("md") || templateID.equals("rela")) {
                             t = configuration.getTemplate("mdftl/othersmd.ftl", "UTF-8");
                         } else {
                             t = configuration.getTemplate("rstftl/othersrst.ftl", "UTF-8");
@@ -293,7 +333,7 @@ public class TemplateFileService {
             }
         }
         //System.out.println(sbReq);
-        result = result+sbGoal+sbObs+sbReq;
+        result = result+sbGoal+sbObs+sbReq+sbRes;
 
         return result;
     }
@@ -308,7 +348,7 @@ public class TemplateFileService {
         PrintStream ps=null;
         try {
             File file=null;
-            if(templateID.equals("md")) {
+            if(templateID.equals("md") || templateID.equals("rela")) {
                 file = new File(ResourceUtils.getURL("src").getPath(),"main/resources/templates/files/md/"+name+".md");
             }else if(templateID.equals("rst")){
                 file = new File(ResourceUtils.getURL("src").getPath(),"main/resources/templates/files/rst/"+name+".rst");
