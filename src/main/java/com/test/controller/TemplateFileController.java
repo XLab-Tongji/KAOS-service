@@ -73,4 +73,22 @@ public class TemplateFileController {
 
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/ServletDownloadJson",method = RequestMethod.POST)
+    public void doJsonDownload(@RequestParam(value = "fileName")String fileName, HttpServletResponse response) throws ServletException, IOException {
+
+
+        response.setHeader("Content-Disposition","attachment;filename=" + fileName + ".json");
+
+        response.setContentType("application/octet-stream");
+
+        response.setContentLength((int) result.length());
+
+        PrintWriter pw = response.getWriter();
+        pw.print(result);
+        System.out.println(result);
+
+    }
+
 }

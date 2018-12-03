@@ -5,6 +5,7 @@ import freemarker.template.TemplateException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.validation.constraints.Null;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +45,9 @@ public class TemplateFileService {
             myname = configuration.getTemplate("mdftl/namemd.ftl","UTF-8");
         }
         else if(templateID.equals("rela")){
-            myname = configuration.getTemplate("mdftl/relanamemd.ftl","UTF-8");
+            myname = configuration.getTemplate("jsonftl/namejs.ftl","UTF-8");
         }
-        else {
+        else if(templateID.equals("rst")){
             myname = configuration.getTemplate("rstftl/namerst.ftl","UTF-8");
         }
 
@@ -181,8 +183,11 @@ public class TemplateFileService {
                     }
                     model.put("value", value);
                     Template t = null;
-                    if(templateID.equals("md") || templateID.equals("rela")){
+                    if(templateID.equals("md")){
                         t = configuration.getTemplate("mdftl/goalmd.ftl","UTF-8");
+                    }
+                    else if(templateID.equals("rela")){
+                        t = configuration.getTemplate("jsonftl/goaljs.ftl","UTF-8");
                     }
                     else {
                         t = configuration.getTemplate("rstftl/goalrst.ftl","UTF-8");
@@ -218,8 +223,11 @@ public class TemplateFileService {
                     }
                     model.put("value", value);
                     Template t = null;
-                    if(templateID.equals("md") || templateID.equals("rela")){
+                    if(templateID.equals("md")){
                         t = configuration.getTemplate("mdftl/requirementmd.ftl","UTF-8");
+                    }
+                    else if(templateID.equals("rela")){
+                        t = configuration.getTemplate("jsonftl/requirementjs.ftl","UTF-8");
                     }
                     else {
                         t = configuration.getTemplate("rstftl/requirementrst.ftl","UTF-8");
@@ -252,8 +260,11 @@ public class TemplateFileService {
                         }
                         model.put("value", value);
                         Template t = null;
-                        if (templateID.equals("md") || templateID.equals("rela")) {
+                        if (templateID.equals("md")) {
                             t = configuration.getTemplate("mdftl/resourcemd.ftl", "UTF-8");
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/resourcejs.ftl", "UTF-8");
                         }
                         else {
                             t = configuration.getTemplate("rstftl/resourcerst.ftl", "UTF-8");
@@ -287,9 +298,12 @@ public class TemplateFileService {
                     model.put("flag", flag);
 
                     Template t = null;
-                    if(templateID.equals("md") || templateID.equals("rela"))
+                    if(templateID.equals("md"))
                     {
                         t = configuration.getTemplate("mdftl/obstacle.ftl","UTF-8");
+                    }
+                    else if(templateID.equals("rela")){
+                        t = configuration.getTemplate("jsonftl/obstaclejs.ftl","UTF-8");
                     }
                     else {
                         t = configuration.getTemplate("rstftl/obstacle.ftl","UTF-8");
@@ -317,9 +331,13 @@ public class TemplateFileService {
                         model.put("flag", flag);
 
                         Template t = null;
-                        if (templateID.equals("md") || templateID.equals("rela")) {
+                        if (templateID.equals("md")) {
                             t = configuration.getTemplate("mdftl/othersmd.ftl", "UTF-8");
-                        } else {
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/othersjs.ftl","UTF-8");
+                        }
+                        else {
                             t = configuration.getTemplate("rstftl/othersrst.ftl", "UTF-8");
                         }
                         content = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
@@ -334,6 +352,19 @@ public class TemplateFileService {
         }
         //System.out.println(sbReq);
         result = result+sbGoal+sbObs+sbReq+sbRes;
+        for(int i = result.length() - 1; i >= 0; i--){
+            if(',' == result.charAt(i)){
+                result = result.substring(0,i) + result.substring(i+1);
+                break;
+            }
+        }
+        String endStr = null;
+        if(templateID.equals("rela")){
+            endStr = "]}           ";
+        }
+        endStr = endStr + "\n\0\0\0\0\0\0\0\0\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\n\0\0\0\0\0\0\0\0\n\0\0\0\0\0\0\0\0\n\n\n\n";
+
+        result = result + endStr;
 
         return result;
     }
