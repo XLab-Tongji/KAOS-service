@@ -132,10 +132,14 @@ public class TemplateFileService {
         String sbGoal = new String();
         String sbObs = new String();
         String sbRes = new String();
+        String sbHex = new String();
+        String sbDom = new String();
         int indexReq = 0;
         int indexGoal = 0;
         int indexObs = 0;
         int indexRes = 0;
+        int indexHex = 0;
+        int indexDom = 0;
         for(int j=0;j<jsonArray.size();j++){
             JSONObject job=jsonArray.getJSONObject(j);
             System.out.println(job);
@@ -148,38 +152,48 @@ public class TemplateFileService {
                     String value = job.getString("-value ");
                     if (job.has("-usecaseDiscription ")) {
                         String usecaseDiscription = job.getString("-usecaseDiscription ");
-                        model.put("usecaseDescription", usecaseDiscription);
+                        if(usecaseDiscription.equals("undefined ")){
+                            model.put("usecaseDescription", "  ");
+                        }
+                        else {
+                            model.put("usecaseDescription", usecaseDiscription);
+                        }
                     }
                     if (!job.has("-usecaseDiscription ")) {
-                        model.put("usecaseDescription", "未定义");
+                        model.put("usecaseDescription", "  ");
                     }
                     if (job.has("-RefinesTo ")) {
-                        String aftCondition = job.getString("-RefinesTo ");
-                        model.put("RefinesTo", aftCondition);
+
+                        String _parentGoal = job.getString("-RefinesTo ");
+                        String parentGoal = _parentGoal.replace("</br>","\",\n\"");
+                        model.put("RefinesTo", parentGoal);
                     }
                     if (!job.has("-RefinesTo ")) {
-                        model.put("RefinesTo", "未定义");
+                        model.put("RefinesTo", "  ");
                     }
                     if (job.has("-RefinedBy ")) {
-                        String aftCondition = job.getString("-RefinedBy ");
-                        model.put("RefinedBy", aftCondition);
+                        String _subGoal = job.getString("-RefinedBy ");
+                        String subGoal = _subGoal.replace("</br>","\",\n\"");
+                        model.put("RefinedBy", subGoal);
                     }
                     if (!job.has("-RefinedBy ")) {
-                        model.put("RefinedBy", "未定义");
+                        model.put("RefinedBy", "  ");
                     }
                     if (job.has("-Obstructs ")) {
-                        String aftCondition = job.getString("-Obstructs ");
-                        model.put("Obstructs", aftCondition);
+                        String _failures = job.getString("-Obstructs ");
+                        String failures = _failures.replace("</br>","\",\n\"");
+                        model.put("Obstructs", failures);
                     }
                     if (!job.has("-Obstructs ")) {
-                        model.put("Obstructs", "未定义");
+                        model.put("Obstructs", "  ");
                     }
                     if (job.has("-Resolves ")) {
-                        String aftCondition = job.getString("-Resolves ");
-                        model.put("Resolves", aftCondition);
+                        String _subRequire = job.getString("-Resolves ");
+                        String subRequire = _subRequire.replace("</br>","\",\n\"");
+                        model.put("Resolves", subRequire);
                     }
                     if (!job.has("-Resolves ")) {
-                        model.put("Resolves", "未定义");
+                        model.put("Resolves", "  ");
                     }
                     model.put("value", value);
                     Template t = null;
@@ -202,24 +216,31 @@ public class TemplateFileService {
                     String value = job.getString("-value ");
                     if (job.has("-Description ")) {
                         String nonFunctionalRule = job.getString("-Description ");
-                        model.put("Description", nonFunctionalRule);
+                        if(nonFunctionalRule.equals("undefined ")){
+                            model.put("Description", "  ");
+                        }
+                        else {
+                            model.put("Description", nonFunctionalRule);
+                        }
                     }
                     if (!job.has("-Description ")) {
-                        model.put("Description", "未定义");
+                        model.put("Description", "  ");
                     }
                     if (job.has("-RefinesTo ")) {
-                        String refines = job.getString("-RefinesTo ");
+                        String _refines = job.getString("-RefinesTo ");
+                        String refines = _refines.replace("</br>","\",\n\"");
                         model.put("RefinesToReq", refines);
                     }
                     if (!job.has("-RefinesTo ")) {
-                        model.put("RefinesToReq", "未定义");
+                        model.put("RefinesToReq", "  ");
                     }
                     if (job.has("-Agents ")) {
-                        String agents = job.getString("-Agents ");
+                        String _agents = job.getString("-Agents ");
+                        String agents = _agents.replace("</br>","\",\n\"");
                         model.put("agents", agents);
                     }
                     if (!job.has("-Agents ")) {
-                        model.put("agents", "未定义");
+                        model.put("agents", "  ");
                     }
                     model.put("value", value);
                     Template t = null;
@@ -245,18 +266,23 @@ public class TemplateFileService {
                         String value = job.getString("-value ");
                         if (job.has("-resourType ")) {
                             String resourceTypes = job.getString("-resourType ");
-                            model.put("resourType",resourceTypes);
+                            if(resourceTypes.equals("undefined ")){
+                                model.put("resourType", "  ");
+                            }
+                            else {
+                                model.put("resourType", resourceTypes);
+                            }
                         }
                         if (!job.has("-resourType ")) {
-                            model.put("resourType", "未定义");
+                            model.put("resourType", "  ");
                         }
                         if (job.has("-RelateTo ")) {
                             String _relates = job.getString("-RelateTo ");
-                            String relates = _relates.replace("</br>","---");
+                            String relates = _relates.replace("</br>","\",\n\"");
                             model.put("RelateTo", relates);
                         }
                         if (!job.has("-RelateTo ")) {
-                            model.put("RelateTo", "未定义");
+                            model.put("RelateTo", "  ");
                         }
                         model.put("value", value);
                         Template t = null;
@@ -282,17 +308,22 @@ public class TemplateFileService {
                     Map<String, Object> model = new HashMap<String, Object>();
                     if (job.has("-gedetail ")) {
                         String detail = job.getString("-gedetail ");
-                        model.put("detail", detail);
+                        if(detail.equals("undefined ")){
+                            model.put("detail", "  ");
+                        }
+                        else {
+                            model.put("detail", detail);
+                        }
                     }
                     if (!job.has("-gedetail ")) {
-                        model.put("detail", "未定义");
+                        model.put("detail", "  ");
                     }
                     if (job.has("-Goal ")) {
                         String detail = job.getString("-Goal ");
                         model.put("Target", detail);
                     }
                     if (!job.has("-Goal ")) {
-                        model.put("Target", "未定义");
+                        model.put("Target", "  ");
                     }
                     model.put("value", value);
                     model.put("flag", flag);
@@ -315,6 +346,78 @@ public class TemplateFileService {
                     sbObs += sbOneObs;
                 }
 
+                else if (flag.equals("hexagon ")) {
+                    if(job.has("-value ")) {
+                        String sbOneHex;
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        String value = job.getString("-value ");
+                        if (job.has("-agentType ")) {
+                            String agentTypes = job.getString("-agentType ");
+                            if(agentTypes.equals("undefined ")){
+                                model.put("agentType", "  ");
+                            }
+                            else {
+                                model.put("agentType", agentTypes);
+                            }
+                        }
+                        if (!job.has("-agentType ")) {
+                            model.put("agentType", "  ");
+                        }
+
+                        model.put("value", value);
+                        Template t = null;
+                        if (templateID.equals("md")) {
+                            t = configuration.getTemplate("mdftl/agentmd.ftl", "UTF-8");
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/agentjs.ftl", "UTF-8");
+                        }
+                        else {
+                            t = configuration.getTemplate("rstftl/agentrst.ftl", "UTF-8");
+                        }
+                        indexHex += 1;
+                        model.put("index", indexHex);
+                        sbOneHex = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbHex += sbOneHex;
+                    }
+                }
+
+                else if (flag.equals("domain_property ")) {
+                    if(job.has("-value ")) {
+                        String sbOneDom;
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        String value = job.getString("-value ");
+                        if (job.has("-domainPropertyRef ")) {
+                            String domainPropertyRef = job.getString("-domainPropertyRef ");
+                            if(domainPropertyRef.equals("undefined ")){
+                                model.put("domainPropertyRef", "  ");
+                            }
+                            else {
+                                model.put("domainPropertyRef", domainPropertyRef);
+                            }
+                        }
+                        if (!job.has("-domainPropertyRef ")) {
+                            model.put("domainPropertyRef", "  ");
+                        }
+
+                        model.put("value", value);
+                        Template t = null;
+                        if (templateID.equals("md")) {
+                            t = configuration.getTemplate("mdftl/domainpropertymd.ftl", "UTF-8");
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/domainpropertyjs.ftl", "UTF-8");
+                        }
+                        else {
+                            t = configuration.getTemplate("rstftl/domainpropertyrst.ftl", "UTF-8");
+                        }
+                        indexDom += 1;
+                        model.put("index", indexDom);
+                        sbOneDom = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbDom += sbOneDom;
+                    }
+                }
+
                 else if (!flag.equals("ellipse ")){
                     if(job.has("-value ")) {
 
@@ -322,13 +425,17 @@ public class TemplateFileService {
                         Map<String, Object> model = new HashMap<String, Object>();
                         if (job.has("-gedetail ")) {
                             String detail = job.getString("-gedetail ");
-                            model.put("detail", detail);
+                            if(detail.equals("undefined ")){
+                                model.put("detail","  ");
+                            }
+                            else {
+                                model.put("detail", detail);
+                            }
                         }
                         if (!job.has("-gedetail ")) {
-                            model.put("detail", "未定义");
+                            model.put("detail", "  ");
                         }
                         model.put("value", value);
-                        model.put("flag", flag);
 
                         Template t = null;
                         if (templateID.equals("md")) {
@@ -351,11 +458,13 @@ public class TemplateFileService {
             }
         }
         //System.out.println(sbReq);
-        result = result+sbGoal+sbObs+sbReq+sbRes;
-        for(int i = result.length() - 1; i >= 0; i--){
-            if(',' == result.charAt(i)){
-                result = result.substring(0,i) + result.substring(i+1);
-                break;
+        result = result+sbGoal+sbObs+sbReq+sbRes+sbHex+sbDom;
+        if(templateID.equals("rela")){
+            for(int i = result.length() - 1; i >= 0; i--){
+                if(',' == result.charAt(i)){
+                    result = result.substring(0,i) + result.substring(i+1);
+                    break;
+                }
             }
         }
         String endStr = null;
