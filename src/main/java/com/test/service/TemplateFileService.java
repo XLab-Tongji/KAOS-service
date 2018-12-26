@@ -150,9 +150,11 @@ public class TemplateFileService {
                     String sbOneGoal;
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
+                    value = value.substring(0,value.length()-1);
                     if (job.has("-usecaseDiscription ")) {
                         String usecaseDiscription = job.getString("-usecaseDiscription ");
-                        if(usecaseDiscription.equals("undefined ")){
+                        usecaseDiscription = usecaseDiscription.substring(0,usecaseDiscription.length()-1);
+                        if(usecaseDiscription.equals("undefined")){
                             model.put("usecaseDescription", "  ");
                         }
                         else {
@@ -166,6 +168,7 @@ public class TemplateFileService {
 
                         String _parentGoal = job.getString("-RefinesTo ");
                         String parentGoal = _parentGoal.replace("</br>","\",\n\"");
+                        parentGoal = parentGoal.substring(0,parentGoal.length()-1);
                         model.put("RefinesTo", parentGoal);
                     }
                     if (!job.has("-RefinesTo ")) {
@@ -174,6 +177,7 @@ public class TemplateFileService {
                     if (job.has("-RefinedBy ")) {
                         String _subGoal = job.getString("-RefinedBy ");
                         String subGoal = _subGoal.replace("</br>","\",\n\"");
+                        subGoal = subGoal.substring(0,subGoal.length()-1);
                         model.put("RefinedBy", subGoal);
                     }
                     if (!job.has("-RefinedBy ")) {
@@ -182,6 +186,7 @@ public class TemplateFileService {
                     if (job.has("-Obstructs ")) {
                         String _failures = job.getString("-Obstructs ");
                         String failures = _failures.replace("</br>","\",\n\"");
+                        failures = failures.substring(0,failures.length()-1);
                         model.put("Obstructs", failures);
                     }
                     if (!job.has("-Obstructs ")) {
@@ -190,6 +195,7 @@ public class TemplateFileService {
                     if (job.has("-Resolves ")) {
                         String _subRequire = job.getString("-Resolves ");
                         String subRequire = _subRequire.replace("</br>","\",\n\"");
+                        subRequire = subRequire.substring(0,subRequire.length()-1);
                         model.put("Resolves", subRequire);
                     }
                     if (!job.has("-Resolves ")) {
@@ -214,9 +220,11 @@ public class TemplateFileService {
                     String sbOneReq;
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
+                    value = value.substring(0,value.length()-1);
                     if (job.has("-Description ")) {
                         String nonFunctionalRule = job.getString("-Description ");
-                        if(nonFunctionalRule.equals("undefined ")){
+                        nonFunctionalRule = nonFunctionalRule.substring(0,nonFunctionalRule.length()-1);
+                        if(nonFunctionalRule.equals("undefined")){
                             model.put("Description", "  ");
                         }
                         else {
@@ -229,6 +237,7 @@ public class TemplateFileService {
                     if (job.has("-RefinesTo ")) {
                         String _refines = job.getString("-RefinesTo ");
                         String refines = _refines.replace("</br>","\",\n\"");
+                        refines = refines.substring(0,refines.length()-1);
                         model.put("RefinesToReq", refines);
                     }
                     if (!job.has("-RefinesTo ")) {
@@ -237,6 +246,7 @@ public class TemplateFileService {
                     if (job.has("-Agents ")) {
                         String _agents = job.getString("-Agents ");
                         String agents = _agents.replace("</br>","\",\n\"");
+                        agents = agents.substring(0,agents.length()-1);
                         model.put("agents", agents);
                     }
                     if (!job.has("-Agents ")) {
@@ -264,9 +274,11 @@ public class TemplateFileService {
                         String sbOneRes;
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
                         if (job.has("-resourType ")) {
                             String resourceTypes = job.getString("-resourType ");
-                            if(resourceTypes.equals("undefined ")){
+                            resourceTypes = resourceTypes.substring(0,resourceTypes.length()-1);
+                            if(resourceTypes.equals("undefined")){
                                 model.put("resourType", "  ");
                             }
                             else {
@@ -279,6 +291,7 @@ public class TemplateFileService {
                         if (job.has("-RelateTo ")) {
                             String _relates = job.getString("-RelateTo ");
                             String relates = _relates.replace("</br>","\",\n\"");
+                            relates = relates.substring(0,relates.length()-1);
                             model.put("RelateTo", relates);
                         }
                         if (!job.has("-RelateTo ")) {
@@ -304,11 +317,12 @@ public class TemplateFileService {
                 else if(flag.equals("obstacle ")){
                     String sbOneObs;
                     String value = job.getString("-value ");
-
+                    value = value.substring(0,value.length()-1);
                     Map<String, Object> model = new HashMap<String, Object>();
                     if (job.has("-gedetail ")) {
                         String detail = job.getString("-gedetail ");
-                        if(detail.equals("undefined ")){
+                        detail = detail.substring(0,detail.length()-1);
+                        if(detail.equals("undefined")){
                             model.put("detail", "  ");
                         }
                         else {
@@ -320,6 +334,7 @@ public class TemplateFileService {
                     }
                     if (job.has("-Goal ")) {
                         String detail = job.getString("-Goal ");
+                        detail = detail.substring(0,detail.length()-1);
                         model.put("Target", detail);
                     }
                     if (!job.has("-Goal ")) {
@@ -351,9 +366,11 @@ public class TemplateFileService {
                         String sbOneHex;
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
                         if (job.has("-agentType ")) {
                             String agentTypes = job.getString("-agentType ");
-                            if(agentTypes.equals("undefined ")){
+                            agentTypes = agentTypes.substring(0,agentTypes.length()-1);
+                            if(agentTypes.equals("undefined")){
                                 model.put("agentType", "  ");
                             }
                             else {
@@ -387,9 +404,11 @@ public class TemplateFileService {
                         String sbOneDom;
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
                         if (job.has("-domainPropertyRef ")) {
                             String domainPropertyRef = job.getString("-domainPropertyRef ");
-                            if(domainPropertyRef.equals("undefined ")){
+                            domainPropertyRef = domainPropertyRef.substring(0,domainPropertyRef.length()-1);
+                            if(domainPropertyRef.equals("undefined")){
                                 model.put("domainPropertyRef", "  ");
                             }
                             else {
@@ -422,10 +441,12 @@ public class TemplateFileService {
                     if(job.has("-value ")) {
 
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
                         Map<String, Object> model = new HashMap<String, Object>();
                         if (job.has("-gedetail ")) {
                             String detail = job.getString("-gedetail ");
-                            if(detail.equals("undefined ")){
+                            detail = detail.substring(0,detail.length()-1);
+                            if(detail.equals("undefined")){
                                 model.put("detail","  ");
                             }
                             else {
