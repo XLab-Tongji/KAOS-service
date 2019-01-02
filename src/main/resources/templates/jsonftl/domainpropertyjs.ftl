@@ -1,5 +1,6 @@
     {
     "GraphType": "Domain_Property${index}",
-    "Description": "${value}",
+    "Name": "${value}",
+    "Description": "${domainPropertyDes}",
     "Reference": "${domainPropertyRef}"
     },

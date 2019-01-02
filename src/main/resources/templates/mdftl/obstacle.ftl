@@ -1,3 +1,3 @@
 ### [Obstacle ${index}]${value}
-- Obstacles:${Target}
+- Obstructs:${Target}
 - Description:${detail}

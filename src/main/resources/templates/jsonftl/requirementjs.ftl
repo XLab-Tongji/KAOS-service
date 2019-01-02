@@ -1,7 +1,7 @@
     {
     "GraphType": "Requirement${index}",
     "RequirementName": "${value}",
-    "RefinesTo": ["${RefinesToReq}"],
+    "RefinesTo": [${RefinesToReq}],
     "Description": "${Description}",
-    "Participants": ["${agents}"]
+    "Participants": [${agents}]
     },
