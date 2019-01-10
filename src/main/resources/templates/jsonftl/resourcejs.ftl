@@ -2,5 +2,5 @@
     "GraphType": "Resource${index}",
     "ResourceName": "${value}",
     "ResourceType": "${resourType}",
-    "Calls": ["${RelateTo}"]
+    "Calls": [${RelateTo}]
     },

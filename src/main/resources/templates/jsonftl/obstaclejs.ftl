@@ -1,6 +1,6 @@
     {
     "GraphType": "Obstacle${index}",
     "ObstacleName": "${value}",
-    "Obstacles": "${Target}",
+    "Obstacles": [${Target}],
     "Description": "${detail}"
     },

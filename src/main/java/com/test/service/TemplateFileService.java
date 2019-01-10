@@ -150,9 +150,11 @@ public class TemplateFileService {
                     String sbOneGoal;
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
+                    value = value.substring(0,value.length()-1);
                     if (job.has("-usecaseDiscription ")) {
                         String usecaseDiscription = job.getString("-usecaseDiscription ");
-                        if(usecaseDiscription.equals("undefined ")){
+                        usecaseDiscription = usecaseDiscription.substring(0,usecaseDiscription.length()-1);
+                        if(usecaseDiscription.equals("undefined")){
                             model.put("usecaseDescription", "  ");
                         }
                         else {
@@ -165,35 +167,67 @@ public class TemplateFileService {
                     if (job.has("-RefinesTo ")) {
 
                         String _parentGoal = job.getString("-RefinesTo ");
-                        String parentGoal = _parentGoal.replace("</br>","\",\n\"");
-                        model.put("RefinesTo", parentGoal);
+                        if (templateID.equals("rela")) {
+                            _parentGoal = _parentGoal.substring(0, _parentGoal.length() - 1);
+                            _parentGoal = "\"" + _parentGoal + "\"";
+                            String parentGoal = _parentGoal.replace("</br>", "\",\n\"");
+                            model.put("RefinesTo", parentGoal);
+                        } else {
+                            String parentGoal = _parentGoal.replace("</br>", " --- ");
+                            model.put("RefinesTo", parentGoal);
+                        }
+
                     }
                     if (!job.has("-RefinesTo ")) {
-                        model.put("RefinesTo", "  ");
+                        model.put("RefinesTo", "");
                     }
                     if (job.has("-RefinedBy ")) {
                         String _subGoal = job.getString("-RefinedBy ");
-                        String subGoal = _subGoal.replace("</br>","\",\n\"");
-                        model.put("RefinedBy", subGoal);
+                        if(templateID.equals("rela")) {
+                            _subGoal = _subGoal.substring(0, _subGoal.length() - 1);
+                            _subGoal = "\""+ _subGoal + "\"";
+                            String subGoal = _subGoal.replace("</br>", "\",\n\"");
+                            model.put("RefinedBy", subGoal);
+                        }
+                        else{
+                            String subGoal = _subGoal.replace("</br>", " --- ");
+                            model.put("RefinedBy", subGoal);
+                        }
                     }
                     if (!job.has("-RefinedBy ")) {
-                        model.put("RefinedBy", "  ");
+                        model.put("RefinedBy", "");
                     }
                     if (job.has("-Obstructs ")) {
                         String _failures = job.getString("-Obstructs ");
-                        String failures = _failures.replace("</br>","\",\n\"");
-                        model.put("Obstructs", failures);
+                        if(templateID.equals("rela")) {
+                            _failures = _failures.substring(0, _failures.length() - 1);
+                            _failures = "\""+ _failures + "\"";
+                            String failures = _failures.replace("</br>", "\",\n\"");
+                            model.put("Obstructs", failures);
+                        }
+                        else{
+                            String failures = _failures.replace("</br>", " --- ");
+                            model.put("Obstructs", failures);
+                        }
                     }
                     if (!job.has("-Obstructs ")) {
-                        model.put("Obstructs", "  ");
+                        model.put("Obstructs", "");
                     }
                     if (job.has("-Resolves ")) {
                         String _subRequire = job.getString("-Resolves ");
-                        String subRequire = _subRequire.replace("</br>","\",\n\"");
-                        model.put("Resolves", subRequire);
+                        if(templateID.equals("rela")) {
+                            _subRequire = _subRequire.substring(0, _subRequire.length() - 1);
+                            _subRequire = "\"" + _subRequire + "\"";
+                            String subRequire = _subRequire.replace("</br>", "\",\n\"");
+                            model.put("Resolves", subRequire);
+                        }
+                        else{
+                            String subRequire = _subRequire.replace("</br>", " --- ");
+                            model.put("Resolves", subRequire);
+                        }
                     }
                     if (!job.has("-Resolves ")) {
-                        model.put("Resolves", "  ");
+                        model.put("Resolves", "");
                     }
                     model.put("value", value);
                     Template t = null;
@@ -214,9 +248,11 @@ public class TemplateFileService {
                     String sbOneReq;
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
+                    value = value.substring(0,value.length()-1);
                     if (job.has("-Description ")) {
                         String nonFunctionalRule = job.getString("-Description ");
-                        if(nonFunctionalRule.equals("undefined ")){
+                        nonFunctionalRule = nonFunctionalRule.substring(0,nonFunctionalRule.length()-1);
+                        if(nonFunctionalRule.equals("undefined")){
                             model.put("Description", "  ");
                         }
                         else {
@@ -228,19 +264,35 @@ public class TemplateFileService {
                     }
                     if (job.has("-RefinesTo ")) {
                         String _refines = job.getString("-RefinesTo ");
-                        String refines = _refines.replace("</br>","\",\n\"");
-                        model.put("RefinesToReq", refines);
+                        if(templateID.equals("rela")) {
+                            _refines = _refines.substring(0, _refines.length() - 1);
+                            _refines = "\"" + _refines + "\"";
+                            String refines = _refines.replace("</br>", "\",\n\"");
+                            model.put("RefinesToReq", refines);
+                        }
+                        else{
+                            String refines = _refines.replace("</br>", " --- ");
+                            model.put("RefinesToReq", refines);
+                        }
                     }
                     if (!job.has("-RefinesTo ")) {
-                        model.put("RefinesToReq", "  ");
+                        model.put("RefinesToReq", "");
                     }
                     if (job.has("-Agents ")) {
                         String _agents = job.getString("-Agents ");
-                        String agents = _agents.replace("</br>","\",\n\"");
-                        model.put("agents", agents);
+                        if(templateID.equals("rela")) {
+                            _agents = _agents.substring(0, _agents.length() - 1);
+                            _agents = "\"" + _agents + "\"";
+                            String agents = _agents.replace("</br>", "\",\n\"");
+                            model.put("agents", agents);
+                        }
+                        else{
+                            String agents = _agents.replace("</br>", " --- ");
+                            model.put("agents", agents);
+                        }
                     }
                     if (!job.has("-Agents ")) {
-                        model.put("agents", "  ");
+                        model.put("agents", "");
                     }
                     model.put("value", value);
                     Template t = null;
@@ -264,9 +316,11 @@ public class TemplateFileService {
                         String sbOneRes;
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1); //remove the blank space
                         if (job.has("-resourType ")) {
                             String resourceTypes = job.getString("-resourType ");
-                            if(resourceTypes.equals("undefined ")){
+                            resourceTypes = resourceTypes.substring(0,resourceTypes.length()-1);
+                            if(resourceTypes.equals("undefined")){
                                 model.put("resourType", "  ");
                             }
                             else {
@@ -278,11 +332,18 @@ public class TemplateFileService {
                         }
                         if (job.has("-RelateTo ")) {
                             String _relates = job.getString("-RelateTo ");
-                            String relates = _relates.replace("</br>","\",\n\"");
-                            model.put("RelateTo", relates);
+                            if (templateID.equals("rela")) {
+                                _relates = _relates.substring(0, _relates.length() - 1);
+                                _relates = "\"" + _relates + "\"";
+                                String relates = _relates.replace("</br>", "\",\n\"");
+                                model.put("RelateTo", relates);
+                            } else {
+                                String relates = _relates.replace("</br>", " --- ");
+                                model.put("RelateTo", relates);
+                            }
                         }
                         if (!job.has("-RelateTo ")) {
-                            model.put("RelateTo", "  ");
+                            model.put("RelateTo", "");
                         }
                         model.put("value", value);
                         Template t = null;
@@ -304,11 +365,12 @@ public class TemplateFileService {
                 else if(flag.equals("obstacle ")){
                     String sbOneObs;
                     String value = job.getString("-value ");
-
+                    value = value.substring(0,value.length()-1);
                     Map<String, Object> model = new HashMap<String, Object>();
                     if (job.has("-gedetail ")) {
                         String detail = job.getString("-gedetail ");
-                        if(detail.equals("undefined ")){
+                        detail = detail.substring(0,detail.length()-1);
+                        if(detail.equals("undefined")){
                             model.put("detail", "  ");
                         }
                         else {
@@ -318,12 +380,21 @@ public class TemplateFileService {
                     if (!job.has("-gedetail ")) {
                         model.put("detail", "  ");
                     }
-                    if (job.has("-Goal ")) {
-                        String detail = job.getString("-Goal ");
-                        model.put("Target", detail);
+                    if (job.has("-Obstructs ")) {
+                        String _detail = job.getString("-Obstructs ");
+                        if(templateID.equals("rela")) {
+                            _detail = _detail.substring(0, _detail.length() - 1);
+                            _detail = "\"" + _detail + "\"";
+                            String detail = _detail.replace("</br>", "\",\n\"");
+                            model.put("Target", detail);
+                        }
+                        else{
+                            String detail = _detail.replace("</br>", " --- ");
+                            model.put("Target", detail);
+                        }
                     }
-                    if (!job.has("-Goal ")) {
-                        model.put("Target", "  ");
+                    if (!job.has("-Obstructs ")) {
+                        model.put("Target", "");
                     }
                     model.put("value", value);
                     model.put("flag", flag);
@@ -351,9 +422,11 @@ public class TemplateFileService {
                         String sbOneHex;
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
                         if (job.has("-agentType ")) {
                             String agentTypes = job.getString("-agentType ");
-                            if(agentTypes.equals("undefined ")){
+                            agentTypes = agentTypes.substring(0,agentTypes.length()-1);
+                            if(agentTypes.equals("undefined")){
                                 model.put("agentType", "  ");
                             }
                             else {
@@ -387,9 +460,11 @@ public class TemplateFileService {
                         String sbOneDom;
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
                         if (job.has("-domainPropertyRef ")) {
                             String domainPropertyRef = job.getString("-domainPropertyRef ");
-                            if(domainPropertyRef.equals("undefined ")){
+                            domainPropertyRef = domainPropertyRef.substring(0,domainPropertyRef.length()-1);
+                            if(domainPropertyRef.equals("undefined")){
                                 model.put("domainPropertyRef", "  ");
                             }
                             else {
@@ -400,6 +475,19 @@ public class TemplateFileService {
                             model.put("domainPropertyRef", "  ");
                         }
 
+                        if (job.has("-domainPropertyDes ")) {
+                            String domainPropertyDes = job.getString("-domainPropertyDes ");
+                            domainPropertyDes = domainPropertyDes.substring(0,domainPropertyDes.length()-1);
+                            if(domainPropertyDes.equals("undefined")){
+                                model.put("domainPropertyDes", "  ");
+                            }
+                            else {
+                                model.put("domainPropertyDes", domainPropertyDes);
+                            }
+                        }
+                        if (!job.has("-domainPropertyDes ")) {
+                            model.put("domainPropertyDes", "  ");
+                        }
                         model.put("value", value);
                         Template t = null;
                         if (templateID.equals("md")) {
@@ -422,10 +510,12 @@ public class TemplateFileService {
                     if(job.has("-value ")) {
 
                         String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
                         Map<String, Object> model = new HashMap<String, Object>();
                         if (job.has("-gedetail ")) {
                             String detail = job.getString("-gedetail ");
-                            if(detail.equals("undefined ")){
+                            detail = detail.substring(0,detail.length()-1);
+                            if(detail.equals("undefined")){
                                 model.put("detail","  ");
                             }
                             else {
