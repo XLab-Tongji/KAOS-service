@@ -59,5 +59,5 @@ docker
 /src/main/resources/
 ​     application.properties             //项目所采用的配置，包括设置端口
 ​     templates/                         //需求文档模板
-/src/test/java/com/test/           //测试程序
+/src/test/java/com/test/           //测试程序 
 ......
