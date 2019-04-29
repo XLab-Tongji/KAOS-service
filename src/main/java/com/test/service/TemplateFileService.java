@@ -35,8 +35,7 @@ public class TemplateFileService {
         //get the useful jsonArray
         JSONArray jsonArrayTemplate=getUseful(sb);
         System.out.println(jsonArrayTemplate);
-        String content;
-        Map<String,Object> name=new HashMap<String, Object>();
+        String content;Map<String,Object> name=new HashMap<String, Object>();
         name.put("name",jsonName);
 
         Template myname = null;
@@ -134,12 +133,20 @@ public class TemplateFileService {
         String sbRes = new String();
         String sbHex = new String();
         String sbDom = new String();
+        String sbResi = new String();
+        String sbDis = new String();
+        String sbOther = new String();
+        String sbTest = new String();
         int indexReq = 0;
         int indexGoal = 0;
         int indexObs = 0;
         int indexRes = 0;
         int indexHex = 0;
         int indexDom = 0;
+        int indexResi = 0;
+        int indexDis=0;
+        int indexTest=0;
+        int indexOther=0;
         for(int j=0;j<jsonArray.size();j++){
             JSONObject job=jsonArray.getJSONObject(j);
             System.out.println(job);
@@ -244,7 +251,8 @@ public class TemplateFileService {
                     model.put("index",indexGoal);
                     sbOneGoal = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
                     sbGoal += sbOneGoal;
-                } else if (flag.equals("requirement ")) {
+                }
+                else if (flag.equals("requirement ")) {
                     String sbOneReq;
                     Map<String, Object> model = new HashMap<String, Object>();
                     String value = job.getString("-value ");
@@ -416,7 +424,6 @@ public class TemplateFileService {
                     //System.out.println(content);
                     sbObs += sbOneObs;
                 }
-
                 else if (flag.equals("hexagon ")) {
                     if(job.has("-value ")) {
                         String sbOneHex;
@@ -454,7 +461,6 @@ public class TemplateFileService {
                         sbHex += sbOneHex;
                     }
                 }
-
                 else if (flag.equals("domain_property ")) {
                     if(job.has("-value ")) {
                         String sbOneDom;
@@ -505,10 +511,142 @@ public class TemplateFileService {
                         sbDom += sbOneDom;
                     }
                 }
+                else if(flag.equals("resilience ")){
+                    if(job.has("-value ")) {
+                        String sbOneResi;
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
+                        if (job.has("-TargetRes ")) {
+                            String resilienceRef = job.getString("-TargetRes ");
+                            resilienceRef = resilienceRef.substring(0,resilienceRef.length()-1);
+                            model.put("TargetRes", resilienceRef);
+                        }
+                        if (!job.has("-TargetRes ")) {
+                            model.put("TargetRes", "  ");
+                        }
 
+                        if (job.has("-BenchmarkedBy ")) {
+                            String resilienceRef = job.getString("-BenchmarkedBy ");
+                            resilienceRef = resilienceRef.substring(0,resilienceRef.length()-1);
+                            model.put("BenchmarkedBy", resilienceRef);
+                        }
+                        if (!job.has("-BenchmarkedBy ")) {
+                            model.put("BenchmarkedBy", "  ");
+                        }
+
+                        if (job.has("-ObstructsResi ")) {
+                            String resilienceRef = job.getString("-ObstructsResi ");
+                            resilienceRef = resilienceRef.substring(5,resilienceRef.length()-1);
+                            model.put("ObstructsResi", resilienceRef);
+                        }
+                        if (!job.has("-ObstructsResi ")) {
+                            model.put("ObstructsResi", "  ");
+                        }
+
+                        model.put("value", value);
+                        Template t = null;
+                        if (templateID.equals("md")) {
+                            t = configuration.getTemplate("mdftl/resiliencemd.ftl", "UTF-8");
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/resiliencejs.ftl", "UTF-8");
+                        }
+                        else {
+                            t = configuration.getTemplate("rstftl/resiliencerst.ftl", "UTF-8");
+                        }
+                        indexResi += 1;
+                        model.put("index", indexResi);
+                        sbOneResi = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbResi += sbOneResi;
+                    }
+                }
+                else if(flag.equals("disruption ")){
+                    if(job.has("-value ")) {
+                        String sbOneDis;
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
+                        if (job.has("-TargetResDis ")) {
+                            String disruptionRef = job.getString("-TargetResDis ");
+                            disruptionRef = disruptionRef.substring(0,disruptionRef.length()-1);
+                            model.put("TargetRes", disruptionRef);
+                        }
+                        if (!job.has("-TargetResDis ")) {
+                            model.put("TargetRes", "  ");
+                        }
+
+                        if (job.has("-ObstructsDis ")) {
+                            String disruptionRef = job.getString("-ObstructsDis ");
+                            disruptionRef = disruptionRef.substring(5,disruptionRef.length()-1);
+                            model.put("obstructGoal", disruptionRef);
+                        }
+                        if (!job.has("-ObstructsDis ")) {
+                            model.put("obstructGoal", "  ");
+                        }
+
+                        model.put("value", value);
+                        Template t = null;
+                        if (templateID.equals("md")) {
+                            t = configuration.getTemplate("mdftl/disruptionmd.ftl", "UTF-8");
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/disruptionjs.ftl", "UTF-8");
+                        }
+                        else {
+                            t = configuration.getTemplate("rstftl/disruptionjsrst.ftl", "UTF-8");
+                        }
+                        indexDis += 1;
+                        model.put("index", indexDis);
+                        sbOneDis = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbDis += sbOneDis;
+                    }
+                }
+                else if(flag.equals("testcase ")){
+                    if(job.has("-value ")) {
+                        String sbOneTest;
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
+                        if (job.has("-Action ")) {
+                            String testCaseRef = job.getString("-Action ");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("Action", testCaseRef);
+                        }
+                        if (!job.has("-Action ")) {
+                            model.put("Action", "  ");
+                        }
+
+                        if (job.has("-testGoalname ")) {
+                            String testCaseRef = job.getString("-testGoalname ");
+                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("GoalName", testCaseRef);
+                        }
+                        if (!job.has("-testGoalname ")) {
+                            model.put("GoalName", "  ");
+                        }
+
+                        model.put("value", value);
+                        Template t = null;
+                        if (templateID.equals("md")) {
+                            t = configuration.getTemplate("mdftl/disruptionmd.ftl", "UTF-8");
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/testcasejs.ftl", "UTF-8");
+                        }
+                        else {
+                            t = configuration.getTemplate("rstftl/disruptionjsrst.ftl", "UTF-8");
+                        }
+                        indexTest += 1;
+                        model.put("index", indexTest);
+                        sbOneTest = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbTest += sbOneTest;
+                    }
+                }
                 else if (!flag.equals("ellipse ")){
                     if(job.has("-value ")) {
-
+                        String sbOneOther;
                         String value = job.getString("-value ");
                         value = value.substring(0,value.length()-1);
                         Map<String, Object> model = new HashMap<String, Object>();
@@ -525,8 +663,9 @@ public class TemplateFileService {
                         if (!job.has("-gedetail ")) {
                             model.put("detail", "  ");
                         }
+                        indexOther += 1;
                         model.put("value", value);
-
+                        model.put("index", indexOther);
                         Template t = null;
                         if (templateID.equals("md")) {
                             t = configuration.getTemplate("mdftl/othersmd.ftl", "UTF-8");
@@ -537,7 +676,8 @@ public class TemplateFileService {
                         else {
                             t = configuration.getTemplate("rstftl/othersrst.ftl", "UTF-8");
                         }
-                        content = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbOneOther = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbOther+=sbOneOther;
                     }
                     //System.out.println(content);
                 }
@@ -548,7 +688,7 @@ public class TemplateFileService {
             }
         }
         //System.out.println(sbReq);
-        result = result+sbGoal+sbObs+sbReq+sbRes+sbHex+sbDom;
+        result = result+sbGoal+sbObs+sbReq+sbRes+sbHex+sbDom+sbDis+sbResi+sbTest+sbOther;
         if(templateID.equals("rela")){
             for(int i = result.length() - 1; i >= 0; i--){
                 if(',' == result.charAt(i)){
