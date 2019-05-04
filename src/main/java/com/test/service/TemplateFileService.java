@@ -137,6 +137,7 @@ public class TemplateFileService {
         String sbDis = new String();
         String sbOther = new String();
         String sbTest = new String();
+        String sbPer = new String();
         int indexReq = 0;
         int indexGoal = 0;
         int indexObs = 0;
@@ -146,6 +147,7 @@ public class TemplateFileService {
         int indexResi = 0;
         int indexDis=0;
         int indexTest=0;
+        int indexPer = 0;
         int indexOther=0;
         for(int j=0;j<jsonArray.size();j++){
             JSONObject job=jsonArray.getJSONObject(j);
@@ -575,7 +577,14 @@ public class TemplateFileService {
                         if (!job.has("-TargetResDis ")) {
                             model.put("TargetRes", "  ");
                         }
-
+                        if (job.has("-description ")) {
+                            String disruptionRef = job.getString("-description ");
+                            disruptionRef = disruptionRef.replace("undefined","");
+                            model.put("description", disruptionRef);
+                        }
+                        if (!job.has("-description ")) {
+                            model.put("description", "  ");
+                        }
                         if (job.has("-ObstructsDis ")) {
                             String disruptionRef = job.getString("-ObstructsDis ");
                             disruptionRef = disruptionRef.substring(5,disruptionRef.length()-1);
@@ -626,6 +635,55 @@ public class TemplateFileService {
                         if (!job.has("-testGoalname ")) {
                             model.put("GoalName", "  ");
                         }
+                        if (job.has("-testDesc ")) {
+                            String testCaseRef = job.getString("-testDesc ");
+                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("testDesc", testCaseRef);
+                        }
+                        if (!job.has("-testDesc ")) {
+                            model.put("testDesc", "  ");
+                        }
+                        if (job.has("-testDT ")) {
+                            String testCaseRef = job.getString("-testDT ");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("testDT", testCaseRef);
+                        }
+                        if (!job.has("-testDT ")) {
+                            model.put("testDT", "  ");
+                        }
+                        if (job.has("-testRT ")) {
+                            String testCaseRef = job.getString("-testRT ");
+                            testCaseRef = testCaseRef.replace("testRT","");
+                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("testRT", testCaseRef);
+                        }
+                        if (!job.has("-testRT ")) {
+                            model.put("testRT", "  ");
+                        }
+                        if (job.has("-testQL ")) {
+                            String testCaseRef = job.getString("-testQL ");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("testQL", testCaseRef);
+                        }
+                        if (!job.has("-testQL ")) {
+                            model.put("testQL", "  ");
+                        }
+                        if (job.has("-testQLUnit ")) {
+                            String testCaseRef = job.getString("-testQLUnit ");
+                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("testQLUnit", testCaseRef);
+                        }
+                        if (!job.has("-testQLUnit ")) {
+                            model.put("testQLUnit", "  ");
+                        }
 
                         model.put("value", value);
                         Template t = null;
@@ -642,6 +700,59 @@ public class TemplateFileService {
                         model.put("index", indexTest);
                         sbOneTest = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
                         sbTest += sbOneTest;
+                    }
+                }
+                else if(flag.equals("performancebenchmark ")){
+                    if(job.has("-value ")) {
+                        String sbOnePer;
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        String value = job.getString("-value ");
+                        value = value.substring(0,value.length()-1);
+                        model.put("value", value);
+                        if (job.has("-PerformanceValue ")) {
+                            String perRef = job.getString("-PerformanceValue ");
+                            perRef.replace("undefined","");
+                            perRef = perRef.substring(0,perRef.length()-1);
+                            model.put("PerformanceValue", perRef);
+                        }
+                        if (!job.has("-PerformanceValue ")) {
+                            model.put("PerformanceValue", "  ");
+                        }
+
+                        if (job.has("-PerformanceTarget ")) {
+                            String perRef = job.getString("-PerformanceTarget ");
+                            perRef.replace("undefined","");
+                            perRef = perRef.substring(0,perRef.length()-1);
+                            model.put("PerformanceTarget", perRef);
+                        }
+                        if (!job.has("-PerformanceTarget ")) {
+                            model.put("PerformanceTarget", "  ");
+                        }
+
+                        if (job.has("-Unit ")) {
+                            String perRef = job.getString("-Unit ");
+                            perRef.replace("undefined","");
+                            perRef = perRef.substring(0,perRef.length()-1);
+                            model.put("Unit", perRef);
+                        }
+                        if (!job.has("-Unit ")) {
+                            model.put("Unit", "  ");
+                        }
+
+                        Template t = null;
+                        if (templateID.equals("md")) {
+                            t = configuration.getTemplate("mdftl/disruptionmd.ftl", "UTF-8");
+                        }
+                        else if(templateID.equals("rela")){
+                            t = configuration.getTemplate("jsonftl/performancebenchmarkjs.ftl", "UTF-8");
+                        }
+                        else {
+                            t = configuration.getTemplate("rstftl/disruptionjsrst.ftl", "UTF-8");
+                        }
+                        indexPer+= 1;
+                        model.put("index", indexPer);
+                        sbOnePer = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+                        sbPer += sbOnePer;
                     }
                 }
                 else if (!flag.equals("ellipse ")){
@@ -688,7 +799,7 @@ public class TemplateFileService {
             }
         }
         //System.out.println(sbReq);
-        result = result+sbGoal+sbObs+sbReq+sbRes+sbHex+sbDom+sbDis+sbResi+sbTest+sbOther;
+        result = result+sbGoal+sbObs+sbReq+sbRes+sbHex+sbDom+sbDis+sbResi+sbTest+sbPer+sbOther;
         if(templateID.equals("rela")){
             for(int i = result.length() - 1; i >= 0; i--){
                 if(',' == result.charAt(i)){

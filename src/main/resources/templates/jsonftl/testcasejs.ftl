@@ -2,5 +2,10 @@
 "GraphType": "TestCase${index}",
 "TestCaseName": "${value}",
 "Action": "${Action}",
-"TestGoal": "${GoalName}"
+"TestGoalName": "${testGoalName}",
+"TestGoalDescription": "${testDesc}",
+"TestGoalDisruptionTolerance": "${testDT}",
+"TestGoalRecoveryTime": "${testRT}",
+"TestGoalQualityLoss": "${testQL}",
+"TestGoalQualityLossUnit": "${testQLUnit}"
 },
