@@ -7,5 +7,6 @@
 "TestGoalDisruptionTolerance": "${testDT}",
 "TestGoalRecoveryTime": "${testRT}",
 "TestGoalQualityLoss": "${testQL}",
-"TestGoalQualityLossUnit": "${testQLUnit}"
+"TestGoalQualityLossUnit": "${testQLUnit}",
+"TestBenchmark":"${testBench}"
 },

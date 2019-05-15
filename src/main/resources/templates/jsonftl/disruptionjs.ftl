@@ -1,7 +1,9 @@
 {
 "GraphType": "Disruption${index}",
 "DisruptionName": "${value}",
-"description":"${description}"
-"TargetRes": "${TargetRes}",
-"Obstructs": "${obstructGoal}"
+"description":"${description}",
+"DisruptionTol": "${DisruptionTol}",
+"RecoveryTime":"${RecoveryTime}",
+"QualityLoss":"${QualityLoss}",
+"ObstructsDis":"${ObstructsDis}"
 },

@@ -3,5 +3,10 @@
 "ResilienceName": "${value}",
 "TargetResilience": "${TargetRes}",
 "BenchmarkedBy": "${BenchmarkedBy}",
-"ObstructedBy": "${ObstructsResi}"
+"DisruptionTol": "${DisruptionTol}",
+"DTUnit":"${DTUnit}",
+"RecoveryTime":"${RecoveryTime}",
+"QualityLoss":"${QualityLoss}",
+"QLUnit":"${QLUnit}",
+"ObstructedBy":"${ObstructsResi}"
 },

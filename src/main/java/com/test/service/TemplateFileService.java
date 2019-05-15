@@ -527,7 +527,14 @@ public class TemplateFileService {
                         if (!job.has("-TargetRes ")) {
                             model.put("TargetRes", "  ");
                         }
-
+                        if (job.has("-ObstructsResi ")) {
+                            String resilienceRef = job.getString("-ObstructsResi ");
+                            resilienceRef = resilienceRef.replace("</br>","");
+                            model.put("ObstructsResi", resilienceRef);
+                        }
+                        if (!job.has("-ObstructsResi ")) {
+                            model.put("ObstructsResi", "  ");
+                        }
                         if (job.has("-BenchmarkedBy ")) {
                             String resilienceRef = job.getString("-BenchmarkedBy ");
                             resilienceRef = resilienceRef.substring(0,resilienceRef.length()-1);
@@ -537,15 +544,46 @@ public class TemplateFileService {
                             model.put("BenchmarkedBy", "  ");
                         }
 
-                        if (job.has("-ObstructsResi ")) {
-                            String resilienceRef = job.getString("-ObstructsResi ");
-                            resilienceRef = resilienceRef.substring(5,resilienceRef.length()-1);
-                            model.put("ObstructsResi", resilienceRef);
+                        if (job.has("-DisruptionTol ")) {
+                            String resilienceRef = job.getString("-DisruptionTol ");
+                            resilienceRef = resilienceRef.replace("undefined","");
+                            model.put("DisruptionTol", resilienceRef);
                         }
-                        if (!job.has("-ObstructsResi ")) {
-                            model.put("ObstructsResi", "  ");
+                        if (!job.has("-DisruptionTol ")) {
+                            model.put("DisruptionTol", "  ");
                         }
-
+                        if (job.has("-DTUnit ")) {
+                            String resilienceRef = job.getString("-DTUnit ");
+                            resilienceRef = resilienceRef.replace("undefined","");
+                            model.put("DTUnit", resilienceRef);
+                        }
+                        if (!job.has("-DTUnit ")) {
+                            model.put("DTUnit", "  ");
+                        }
+                        if (job.has("-RecoveryTime ")) {
+                            String resilienceRef = job.getString("-RecoveryTime ");
+                            resilienceRef = resilienceRef.replace("undefined","");
+                            model.put("RecoveryTime", resilienceRef);
+                        }
+                        if (!job.has("-RecoveryTime ")) {
+                            model.put("RecoveryTime", "  ");
+                        }
+                        if (job.has("-QualityLoss ")) {
+                            String resilienceRef = job.getString("-QualityLoss ");
+                            resilienceRef = resilienceRef.replace("undefined","");
+                            model.put("QualityLoss", resilienceRef);
+                        }
+                        if (!job.has("-QualityLoss ")) {
+                            model.put("QualityLoss", "  ");
+                        }
+                        if (job.has("-QLUnit ")) {
+                            String resilienceRef = job.getString("-QLUnit ");
+                            resilienceRef = resilienceRef.replace("undefined","");
+                            model.put("QLUnit", resilienceRef);
+                        }
+                        if (!job.has("-QLUnit ")) {
+                            model.put("QLUnit", "  ");
+                        }
                         model.put("value", value);
                         Template t = null;
                         if (templateID.equals("md")) {
@@ -569,14 +607,6 @@ public class TemplateFileService {
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
                         value = value.substring(0,value.length()-1);
-                        if (job.has("-TargetResDis ")) {
-                            String disruptionRef = job.getString("-TargetResDis ");
-                            disruptionRef = disruptionRef.substring(0,disruptionRef.length()-1);
-                            model.put("TargetRes", disruptionRef);
-                        }
-                        if (!job.has("-TargetResDis ")) {
-                            model.put("TargetRes", "  ");
-                        }
                         if (job.has("-description ")) {
                             String disruptionRef = job.getString("-description ");
                             disruptionRef = disruptionRef.replace("undefined","");
@@ -585,15 +615,39 @@ public class TemplateFileService {
                         if (!job.has("-description ")) {
                             model.put("description", "  ");
                         }
+                        if (job.has("-DisruptionTol ")) {
+                            String disruptionRef = job.getString("-DisruptionTol ");
+                            disruptionRef = disruptionRef.replace("undefined","");
+                            model.put("DisruptionTol", disruptionRef);
+                        }
+                        if (!job.has("-DisruptionTol ")) {
+                            model.put("DisruptionTol", "  ");
+                        }
                         if (job.has("-ObstructsDis ")) {
                             String disruptionRef = job.getString("-ObstructsDis ");
-                            disruptionRef = disruptionRef.substring(5,disruptionRef.length()-1);
-                            model.put("obstructGoal", disruptionRef);
+                            disruptionRef = disruptionRef.replace("undefined","");
+                            disruptionRef = disruptionRef.replace("</br>","");
+                            model.put("ObstructsDis", disruptionRef);
                         }
                         if (!job.has("-ObstructsDis ")) {
-                            model.put("obstructGoal", "  ");
+                            model.put("ObstructsDis", "  ");
                         }
-
+                        if (job.has("-RecoveryTime ")) {
+                            String disruptionRef = job.getString("-RecoveryTime ");
+                            disruptionRef = disruptionRef.replace("undefined","");
+                            model.put("RecoveryTime", disruptionRef);
+                        }
+                        if (!job.has("-RecoveryTime ")) {
+                            model.put("RecoveryTime", "  ");
+                        }
+                        if (job.has("-QualityLoss ")) {
+                            String disruptionRef = job.getString("-QualityLoss ");
+                            disruptionRef = disruptionRef.replace("undefined","");
+                            model.put("QualityLoss", disruptionRef);
+                        }
+                        if (!job.has("-QualityLoss ")) {
+                            model.put("QualityLoss", "  ");
+                        }
                         model.put("value", value);
                         Template t = null;
                         if (templateID.equals("md")) {
@@ -630,10 +684,10 @@ public class TemplateFileService {
                             String testCaseRef = job.getString("-testGoalname ");
                             testCaseRef = testCaseRef.replace("</br>",",");
                             testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
-                            model.put("GoalName", testCaseRef);
+                            model.put("testGoalName", testCaseRef);
                         }
                         if (!job.has("-testGoalname ")) {
-                            model.put("GoalName", "  ");
+                            model.put("testGoalName", "  ");
                         }
                         if (job.has("-testDesc ")) {
                             String testCaseRef = job.getString("-testDesc ");
@@ -648,6 +702,7 @@ public class TemplateFileService {
                         if (job.has("-testDT ")) {
                             String testCaseRef = job.getString("-testDT ");
                             testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.replace("</br>",",");
                             testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
                             model.put("testDT", testCaseRef);
                         }
@@ -684,7 +739,16 @@ public class TemplateFileService {
                         if (!job.has("-testQLUnit ")) {
                             model.put("testQLUnit", "  ");
                         }
-
+                        if (job.has("-testBench ")) {
+                            String testCaseRef = job.getString("-testBench ");
+                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            model.put("testBench", testCaseRef);
+                        }
+                        if (!job.has("-testBench ")) {
+                            model.put("testBench", "  ");
+                        }
                         model.put("value", value);
                         Template t = null;
                         if (templateID.equals("md")) {
