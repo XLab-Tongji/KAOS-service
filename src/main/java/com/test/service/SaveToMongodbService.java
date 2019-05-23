@@ -1,7 +1,9 @@
 package com.test.service;
 
 import com.test.entity.KaoserFile;
+import com.test.entity.KaoserShape;
 import com.test.repository.KaoserFileRepository;
+import com.test.repository.KaoserShapeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,6 +19,10 @@ import java.util.Map;
 public class SaveToMongodbService {
     @Autowired
     private KaoserFileRepository kaoserFileRepository;
+
+    @Autowired
+    private KaoserShapeRepository kaoserShapeRepository;
+
     @Autowired
     MongoTemplate mongoTemplate;
     public String doSaveToMongodb(String title,String jsonGet,String myName,String projectName)throws IOException {
@@ -42,6 +48,27 @@ public class SaveToMongodbService {
             resp = "{\"name\":\"success\"}";
         }
         System.out.println(resp);
+        return resp;
+    }
+
+    public String doSaveShapeToMongodb(String id,String style,int width,int height,String title)throws IOException {
+        String resp;
+        KaoserShape myshape=new KaoserShape();
+        myshape.setHeight(height);
+        myshape.setId(id);
+        myshape.setStyle(style);
+        myshape.setTitle(title);
+        myshape.setWidth(width);
+
+        Criteria criatira = new Criteria();
+        criatira.andOperator(Criteria.where("id").is(id), Criteria.where("style").is(style));
+        if(mongoTemplate.count(new Query(criatira), KaoserShape.class)>0){
+            resp = "{\"name\":\"fail\"}";
+        }
+        else{
+            kaoserShapeRepository.save(myshape);
+            resp = "{\"name\":\"success\"}";
+        }
         return resp;
     }
 

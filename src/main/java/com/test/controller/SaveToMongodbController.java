@@ -49,6 +49,17 @@ public class SaveToMongodbController {
         }
     }
 
+    @RequestMapping(value = "/savemyshape" ,method = RequestMethod.POST)
+    @ResponseBody
+    public String savemyshape(@RequestParam(value = "id")String id,
+                       @RequestParam(value = "style")String style,
+                       @RequestParam(value = "width")int width,
+                       @RequestParam(value = "height")int height,
+                       @RequestParam(value = "title")String title)
+            throws IOException{
+        return saveToMongodbService.doSaveShapeToMongodb(id,style,width,height,title);
+    }
+
     public KaoserFile findByName(String name){
         return kaoserFileRepository.findByName(name);
     }
