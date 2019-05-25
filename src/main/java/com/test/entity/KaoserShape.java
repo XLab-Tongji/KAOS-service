@@ -6,12 +6,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "KaoserShape")
 public class KaoserShape {
 
+    public String getMyid() {
+        return myid;
+    }
+
+    public void setMyid(String myid) {
+        this.myid = myid;
+    }
+
     @Id
+    private String myid;
     private String id;
+    private String name;
     private String style;
     private int width;
     private int height;
-    private String title;
+    private String attribute;
 
     public String getId() {
         return id;
@@ -45,11 +55,19 @@ public class KaoserShape {
         this.height = height;
     }
 
-    public String getTitle() {
-        return title;
+    public String getAttribute() {
+        return attribute;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAttribute(String title) {
+        this.attribute = title;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

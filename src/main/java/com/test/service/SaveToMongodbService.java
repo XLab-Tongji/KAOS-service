@@ -10,10 +10,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
+
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Service
 public class SaveToMongodbService {
@@ -51,22 +50,23 @@ public class SaveToMongodbService {
         return resp;
     }
 
-    public String doSaveShapeToMongodb(String id,String style,int width,int height,String title)throws IOException {
+    public String doSaveShapeToMongodb(String id,String name,String style,int width,int height,String attribute)throws IOException {
         String resp;
         KaoserShape myshape=new KaoserShape();
         myshape.setHeight(height);
+        myshape.setName(name);
         myshape.setId(id);
         myshape.setStyle(style);
-        myshape.setTitle(title);
+        myshape.setAttribute(attribute);
         myshape.setWidth(width);
 
         Criteria criatira = new Criteria();
-        criatira.andOperator(Criteria.where("id").is(id), Criteria.where("style").is(style));
+        criatira.andOperator(Criteria.where("id").is(id), Criteria.where("style").is(style),Criteria.where("name").is(name));
         if(mongoTemplate.count(new Query(criatira), KaoserShape.class)>0){
             resp = "{\"name\":\"fail\"}";
         }
         else{
-            kaoserShapeRepository.save(myshape);
+            mongoTemplate.save(myshape);
             resp = "{\"name\":\"success\"}";
         }
         return resp;
@@ -79,6 +79,13 @@ public class SaveToMongodbService {
         String resp = "";
         resp = "{\"name\":\"success\"}";
         return resp;
+    }
+
+    public List<KaoserShape> findMyShapeByNameAndId(String id){
+        Criteria criteria = new Criteria();
+        criteria.andOperator(Criteria.where("id").is(id));
+        List result = mongoTemplate.find(new Query(criteria),KaoserShape.class);
+        return result;
     }
 
     public KaoserFile addNewFile(String username,

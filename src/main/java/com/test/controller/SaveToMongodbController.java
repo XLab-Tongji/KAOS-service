@@ -1,6 +1,7 @@
 package com.test.controller;
 
 import com.test.entity.KaoserFile;
+import com.test.entity.KaoserShape;
 import com.test.repository.KaoserFileRepository;
 import com.test.service.SaveToMongodbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -52,12 +54,20 @@ public class SaveToMongodbController {
     @RequestMapping(value = "/savemyshape" ,method = RequestMethod.POST)
     @ResponseBody
     public String savemyshape(@RequestParam(value = "id")String id,
-                       @RequestParam(value = "style")String style,
-                       @RequestParam(value = "width")int width,
-                       @RequestParam(value = "height")int height,
-                       @RequestParam(value = "title")String title)
+                              @RequestParam(value = "name")String name,
+                              @RequestParam(value = "style")String style,
+                              @RequestParam(value = "width")int width,
+                              @RequestParam(value = "height")int height,
+                              @RequestParam(value = "attribute")String attribute)
             throws IOException{
-        return saveToMongodbService.doSaveShapeToMongodb(id,style,width,height,title);
+        return saveToMongodbService.doSaveShapeToMongodb(id,name,style,width,height,attribute);
+    }
+
+    @RequestMapping(value = "/loadmyshape" ,method = RequestMethod.GET)
+    @ResponseBody
+    public List<KaoserShape> loadmyshape(@RequestParam(value = "id")String id)
+            throws IOException{
+        return saveToMongodbService.findMyShapeByNameAndId(id);
     }
 
     public KaoserFile findByName(String name){
