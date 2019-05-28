@@ -21,7 +21,7 @@ public class RegisterService {
                 return "1";   //字符串中含有空格
             }else{
                 if(username.length()<=5||username.length()>=17||password.length()<=5||password.length()>=17){
-                    return "2";    //密码长度应该在6～16之间
+                    return "2";    //用户名和密码长度应该在6～16之间
                 }
                 else{
                     User user = new User();

@@ -22,6 +22,7 @@ public class KaoserShape {
     private int width;
     private int height;
     private String attribute;
+    private String projectName;
 
     public String getId() {
         return id;
@@ -70,4 +71,8 @@ public class KaoserShape {
     public void setName(String name) {
         this.name = name;
     }
+
+    public  String getProjectName(){return projectName;}
+
+    public void setProjectName(String projectName){this.projectName = projectName;}
 }
