@@ -763,6 +763,18 @@ public class TemplateFileService {
                         if (!job.has("-testBench ")) {
                             model.put("testBench", "  ");
                         }
+                        if (job.has("-testTarget ")) {
+                            String testCaseRef = job.getString("-testTarget ");
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
+
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            model.put("testTarget", testCaseRef);
+                        }
+                        if (!job.has("-testTarget ")) {
+                            model.put("testTarget", "  ");
+                        }
                         model.put("value", value);
                         Template t = null;
                         if (templateID.equals("md")) {
