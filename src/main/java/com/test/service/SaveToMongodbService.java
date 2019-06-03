@@ -50,7 +50,7 @@ public class SaveToMongodbService {
         return resp;
     }
 
-    public String doSaveShapeToMongodb(String id,String name,String style,int width,int height,String attribute)throws IOException {
+    public String doSaveShapeToMongodb(String id,String name,String style,int width,int height,String attribute,String projectName)throws IOException {
         String resp;
         KaoserShape myshape=new KaoserShape();
         myshape.setHeight(height);
@@ -59,6 +59,7 @@ public class SaveToMongodbService {
         myshape.setStyle(style);
         myshape.setAttribute(attribute);
         myshape.setWidth(width);
+        myshape.setProjectName(projectName);
 
         Criteria criatira = new Criteria();
         criatira.andOperator(Criteria.where("id").is(id), Criteria.where("style").is(style),Criteria.where("name").is(name));
@@ -81,9 +82,9 @@ public class SaveToMongodbService {
         return resp;
     }
 
-    public List<KaoserShape> findMyShapeByNameAndId(String id){
+    public List<KaoserShape> findMyShapeByNameAndId(String projectName){
         Criteria criteria = new Criteria();
-        criteria.andOperator(Criteria.where("id").is(id));
+        criteria.andOperator(Criteria.where("projectName").is(projectName));
         List result = mongoTemplate.find(new Query(criteria),KaoserShape.class);
         return result;
     }

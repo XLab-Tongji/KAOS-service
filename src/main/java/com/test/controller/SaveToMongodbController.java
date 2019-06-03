@@ -58,16 +58,17 @@ public class SaveToMongodbController {
                               @RequestParam(value = "style")String style,
                               @RequestParam(value = "width")int width,
                               @RequestParam(value = "height")int height,
-                              @RequestParam(value = "attribute")String attribute)
+                              @RequestParam(value = "attribute")String attribute,
+                              @RequestParam(value = "projectName")String projectName)
             throws IOException{
-        return saveToMongodbService.doSaveShapeToMongodb(id,name,style,width,height,attribute);
+        return saveToMongodbService.doSaveShapeToMongodb(id,name,style,width,height,attribute,projectName);
     }
 
     @RequestMapping(value = "/loadmyshape" ,method = RequestMethod.GET)
     @ResponseBody
-    public List<KaoserShape> loadmyshape(@RequestParam(value = "id")String id)
+    public List<KaoserShape> loadmyshape(@RequestParam(value = "projectName")String projectName)
             throws IOException{
-        return saveToMongodbService.findMyShapeByNameAndId(id);
+        return saveToMongodbService.findMyShapeByNameAndId(projectName);
     }
 
     public KaoserFile findByName(String name){
