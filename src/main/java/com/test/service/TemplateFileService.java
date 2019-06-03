@@ -682,8 +682,9 @@ public class TemplateFileService {
 
                         if (job.has("-testGoalname ")) {
                             String testCaseRef = job.getString("-testGoalname ");
-                            testCaseRef = testCaseRef.replace("</br>",",");
-                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
                             model.put("testGoalName", testCaseRef);
                         }
                         if (!job.has("-testGoalname ")) {
@@ -691,9 +692,11 @@ public class TemplateFileService {
                         }
                         if (job.has("-testDesc ")) {
                             String testCaseRef = job.getString("-testDesc ");
-                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
+
                             testCaseRef = testCaseRef.replace("undefined","");
-                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
                             model.put("testDesc", testCaseRef);
                         }
                         if (!job.has("-testDesc ")) {
@@ -701,9 +704,11 @@ public class TemplateFileService {
                         }
                         if (job.has("-testDT ")) {
                             String testCaseRef = job.getString("-testDT ");
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
+
                             testCaseRef = testCaseRef.replace("undefined","");
-                            testCaseRef = testCaseRef.replace("</br>",",");
-                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
                             model.put("testDT", testCaseRef);
                         }
                         if (!job.has("-testDT ")) {
@@ -711,9 +716,11 @@ public class TemplateFileService {
                         }
                         if (job.has("-testRT ")) {
                             String testCaseRef = job.getString("-testRT ");
-                            testCaseRef = testCaseRef.replace("testRT","");
-                            testCaseRef = testCaseRef.replace("</br>",",");
-                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
+
                             model.put("testRT", testCaseRef);
                         }
                         if (!job.has("-testRT ")) {
@@ -722,8 +729,10 @@ public class TemplateFileService {
                         if (job.has("-testQL ")) {
                             String testCaseRef = job.getString("-testQL ");
                             testCaseRef = testCaseRef.replace("undefined","");
-                            testCaseRef = testCaseRef.replace("</br>",",");
-                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
+
                             model.put("testQL", testCaseRef);
                         }
                         if (!job.has("-testQL ")) {
@@ -731,9 +740,12 @@ public class TemplateFileService {
                         }
                         if (job.has("-testQLUnit ")) {
                             String testCaseRef = job.getString("-testQLUnit ");
-                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
+
                             testCaseRef = testCaseRef.replace("undefined","");
-                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
+
                             model.put("testQLUnit", testCaseRef);
                         }
                         if (!job.has("-testQLUnit ")) {
@@ -741,9 +753,11 @@ public class TemplateFileService {
                         }
                         if (job.has("-testBench ")) {
                             String testCaseRef = job.getString("-testBench ");
-                            testCaseRef = testCaseRef.replace("</br>",",");
+                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            testCaseRef = "\"" + testCaseRef + "\"";
+                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
+
                             testCaseRef = testCaseRef.replace("undefined","");
-                            testCaseRef = testCaseRef.substring(0,testCaseRef.length()-1);
                             model.put("testBench", testCaseRef);
                         }
                         if (!job.has("-testBench ")) {

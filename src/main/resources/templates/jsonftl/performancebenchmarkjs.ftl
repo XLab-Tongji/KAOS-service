@@ -1,5 +1,5 @@
 {
-"GraphType": "Requirement${index}",
+"GraphType": "PerformanceBenchmark${index}",
 "PerformanceAttribute": "${value}",
 "Value":"${PerformanceValue}"
 "TargetAsset": ${PerformanceTarget},
