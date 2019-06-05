@@ -73,6 +73,25 @@ public class SaveToMongodbService {
         return resp;
     }
 
+
+    public String doDeleteShapeToMongodb(String id,String name,String style,String projectName)throws IOException {
+        String resp;
+        Criteria criatira = new Criteria();
+        criatira.andOperator(Criteria.where("id").is(id), Criteria.where("style").is(style),Criteria.where("name").is(name),Criteria.where("projectName").is(projectName));
+        if(mongoTemplate.count(new Query(criatira), KaoserShape.class) == 1){
+            mongoTemplate.remove(new Query(criatira), KaoserShape.class);
+            resp = "{\"name\":\"success\"}";
+        }
+        else{
+            resp = "{\"name\":\"fail\"}";
+        }
+        return resp;
+    }
+
+
+
+
+
     public String updateToMongo(String id,String name,String jsonStr){
         Query query=new Query(Criteria.where("_id").is(id));
         Update update = Update.update("name", name).set("jsonStr",jsonStr);
