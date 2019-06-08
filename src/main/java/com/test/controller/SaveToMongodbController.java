@@ -75,6 +75,21 @@ public class SaveToMongodbController {
         return kaoserFileRepository.findByName(name);
     }
 
+
+    @RequestMapping(value = "/deletemyshape" ,method = RequestMethod.POST)
+    @ResponseBody
+    public String deletemyshape(@RequestParam(value = "id")String id,
+                              @RequestParam(value = "name")String name,
+                              @RequestParam(value = "style")String style,
+                              @RequestParam(value = "projectName")String projectName)
+            throws IOException{
+        return saveToMongodbService.doDeleteShapeToMongodb(id,name,style,projectName);
+    }
+
+
+
+
+
     /**
      * 新建文档
      * @param username
