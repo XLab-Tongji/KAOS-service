@@ -1,7 +1,7 @@
 {
-"GraphType": "PerformanceBenchmark${index}",
-"PerformanceAttribute": "${value}",
-"Value":"${PerformanceValue}"
-"TargetAsset": ${PerformanceTarget},
-"Unit": "${Unit}"
+    "GraphType": "PerformanceBenchmark${index}",
+    "PerformanceAttribute": "${value}",
+    "Value":"${PerformanceValue}",
+    "TargetAsset": "${PerformanceTarget}",
+    "Unit": "${Unit}"
 },
