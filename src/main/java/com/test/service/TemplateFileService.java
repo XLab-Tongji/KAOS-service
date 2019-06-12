@@ -685,7 +685,7 @@ public class TemplateFileService {
                             testCaseRef = testCaseRef.replace("</br>", ",");
                             testCaseRef = testCaseRef.replace("undefined","");
                             String[] mytestGoalname = testCaseRef.split(",");
-                            if (job.has("-testTarget" )) {
+                            if (job.has("-testTarget " )) {
                                 testCaseRef = job.getString("-testTarget ");
                                 testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
                             }else{
