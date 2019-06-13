@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.validation.constraints.Null;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TemplateFileService {
@@ -683,98 +682,120 @@ public class TemplateFileService {
                         if (job.has("-testGoalname ")) {
                             String testCaseRef = job.getString("-testGoalname ");
                             testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
-                            model.put("testGoalName", testCaseRef);
+                            testCaseRef = testCaseRef.replace("</br>", ",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            String[] mytestGoalname = testCaseRef.split(",");
+                            if (job.has("-testTarget " )) {
+                                testCaseRef = job.getString("-testTarget ");
+                                testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            }else{
+                                testCaseRef="";
+                            }
+                            testCaseRef = testCaseRef.replace("</br>", ",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            String[] mytestTarget = testCaseRef.split(",");
+                            List<String> mylist = new ArrayList<>(Arrays.asList(mytestTarget));
+                            for(int i =mytestTarget.length;i< mytestGoalname.length;i++){
+                                mylist.add(" ");
+                            }
+                            mytestTarget = mylist.toArray(new String[0]);
+
+                            if (job.has("-testDT " )) {
+                                testCaseRef = job.getString("-testDT ");
+                                testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            }else{
+                                testCaseRef="";
+                            }
+                            testCaseRef = testCaseRef.replace("</br>", ",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            String[] mytestDT = testCaseRef.split(",");
+                            mylist = new ArrayList<>(Arrays.asList(mytestDT));
+                            for(int i =mytestDT.length;i< mytestGoalname.length;i++){
+                                mylist.add(" ");
+                            }
+                            mytestDT = mylist.toArray(new String[0]);
+
+                            if (job.has("-testRT " )) {
+                                testCaseRef = job.getString("-testRT ");
+                                testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            }else{
+                                testCaseRef="";
+                            }
+
+                            testCaseRef = testCaseRef.replace("</br>", ",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            String[] mytestRT = testCaseRef.split(",");
+                            mylist = new ArrayList<>(Arrays.asList(mytestRT));
+                            for(int i =mytestRT.length;i< mytestGoalname.length;i++){
+                                mylist.add(" ");
+                            }
+                            mytestRT = mylist.toArray(new String[0]);
+
+                            if (job.has("-testQL " )) {
+                                testCaseRef = job.getString("-testQL ");
+                                testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            }else{
+                                testCaseRef="";
+                            }
+
+                            testCaseRef = testCaseRef.replace("</br>", ",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            String[] mytestQL = testCaseRef.split(",");
+                            mylist = new ArrayList<>(Arrays.asList(mytestQL));
+                            for(int i =mytestQL.length;i< mytestGoalname.length;i++){
+                                mylist.add(" ");
+                            }
+                            mytestQL = mylist.toArray(new String[0]);
+
+                            if (job.has("-testQLUnit " )) {
+                                testCaseRef = job.getString("-testQLUnit ");
+                                testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            }else{
+                                testCaseRef="";
+                            }
+
+                            testCaseRef = testCaseRef.replace("</br>", ",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            String[] mytestQLUnit = testCaseRef.split(",");
+                            mylist = new ArrayList<>(Arrays.asList(mytestQLUnit));
+                            for(int i =mytestQLUnit.length;i< mytestGoalname.length;i++){
+                                mylist.add(" ");
+                            }
+                            mytestQLUnit = mylist.toArray(new String[0]);
+
+                            if (job.has("-testBench " )) {
+                                testCaseRef = job.getString("-testBench ");
+                                testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
+                            }else{
+                                testCaseRef="";
+                            }
+                            testCaseRef = testCaseRef.replace("</br>", ",");
+                            testCaseRef = testCaseRef.replace("undefined","");
+                            String[] mytestBench = testCaseRef.split(",");
+                            mylist = new ArrayList<>(Arrays.asList(mytestBench));
+                            for(int i =mytestBench.length;i< mytestGoalname.length;i++){
+                                mylist.add(" ");
+                            }
+                            mytestBench = mylist.toArray(new String[0]);
+                            String myresult = "";
+                            for(int i=0;i<mytestGoalname.length;i++){
+                                String mytestgoal = "{" + "\"TestGoalName\" :"+ "\"" +mytestGoalname[i] + "\",\n" +
+                                        "\"TestTarget\" :"+ "\"" +mytestTarget[i] + "\",\n" +
+                                        "\"TestGoalDisruptionTolerance\" :"+ "\"" +mytestDT[i] + "\",\n" +
+                                        "\"TestGoalRecoveryTime\" :"+ "\"" +mytestRT[i] + "\",\n" +
+                                        "\"TestGoalQualityLoss\" :"+ "\"" +mytestQL[i] + "\",\n" +
+                                        "\"TestGoalQualityLossUnit\" :"+ "\"" +mytestQLUnit[i] + "\",\n" +
+                                        "\"TestBenchmark\" :"+ "\"" +mytestBench[i] + "\""+"},";
+                                myresult = myresult +mytestgoal;
+                            }
+                            myresult = myresult.substring(0,myresult.length()-1);
+                            model.put("testGoal", myresult);
                         }
                         if (!job.has("-testGoalname ")) {
-                            model.put("testGoalName", "  ");
+                            model.put("testGoal", "{}");
                         }
-                        if (job.has("-testDesc ")) {
-                            String testCaseRef = job.getString("-testDesc ");
-                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
 
-                            testCaseRef = testCaseRef.replace("undefined","");
-                            model.put("testDesc", testCaseRef);
-                        }
-                        if (!job.has("-testDesc ")) {
-                            model.put("testDesc", "  ");
-                        }
-                        if (job.has("-testDT ")) {
-                            String testCaseRef = job.getString("-testDT ");
-                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
 
-                            testCaseRef = testCaseRef.replace("undefined","");
-                            model.put("testDT", testCaseRef);
-                        }
-                        if (!job.has("-testDT ")) {
-                            model.put("testDT", "  ");
-                        }
-                        if (job.has("-testRT ")) {
-                            String testCaseRef = job.getString("-testRT ");
-                            testCaseRef = testCaseRef.replace("undefined","");
-                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
-
-                            model.put("testRT", testCaseRef);
-                        }
-                        if (!job.has("-testRT ")) {
-                            model.put("testRT", "  ");
-                        }
-                        if (job.has("-testQL ")) {
-                            String testCaseRef = job.getString("-testQL ");
-                            testCaseRef = testCaseRef.replace("undefined","");
-                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
-
-                            model.put("testQL", testCaseRef);
-                        }
-                        if (!job.has("-testQL ")) {
-                            model.put("testQL", "  ");
-                        }
-                        if (job.has("-testQLUnit ")) {
-                            String testCaseRef = job.getString("-testQLUnit ");
-                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
-
-                            testCaseRef = testCaseRef.replace("undefined","");
-
-                            model.put("testQLUnit", testCaseRef);
-                        }
-                        if (!job.has("-testQLUnit ")) {
-                            model.put("testQLUnit", "  ");
-                        }
-                        if (job.has("-testBench ")) {
-                            String testCaseRef = job.getString("-testBench ");
-                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
-
-                            testCaseRef = testCaseRef.replace("undefined","");
-                            model.put("testBench", testCaseRef);
-                        }
-                        if (!job.has("-testBench ")) {
-                            model.put("testBench", "  ");
-                        }
-                        if (job.has("-testTarget ")) {
-                            String testCaseRef = job.getString("-testTarget ");
-                            testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
-                            testCaseRef = "\"" + testCaseRef + "\"";
-                            testCaseRef = testCaseRef.replace("</br>", "\",\"");
-
-                            testCaseRef = testCaseRef.replace("undefined","");
-                            model.put("testTarget", testCaseRef);
-                        }
-                        if (!job.has("-testTarget ")) {
-                            model.put("testTarget", "  ");
-                        }
                         model.put("value", value);
                         Template t = null;
                         if (templateID.equals("md")) {
