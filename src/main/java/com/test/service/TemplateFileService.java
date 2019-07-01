@@ -518,6 +518,12 @@ public class TemplateFileService {
                         Map<String, Object> model = new HashMap<String, Object>();
                         String value = job.getString("-value ");
                         value = value.substring(0,value.length()-1);
+                        value = value.replace("</br>", "");
+                        value = value.replace("<br>", "");
+                        value = value.replace("<div>", "");
+                        value = value.replace("</div>", "");
+                        value = value.replace("<span>","");
+                        value = value.replace("</span>","");
                         if (job.has("-TargetRes ")) {
                             String resilienceRef = job.getString("-TargetRes ");
                             resilienceRef = resilienceRef.substring(0,resilienceRef.length()-1);
@@ -683,7 +689,11 @@ public class TemplateFileService {
                             String testCaseRef = job.getString("-testGoalname ");
                             testCaseRef = testCaseRef.substring(0, testCaseRef.length() - 1);
                             testCaseRef = testCaseRef.replace("</br>", ",");
-                            testCaseRef = testCaseRef.replace("undefined","");
+                            testCaseRef = testCaseRef.replace("<br>", "");
+                            testCaseRef = testCaseRef.replace("<div>", "");
+                            testCaseRef = testCaseRef.replace("</div>", "");
+                            testCaseRef = testCaseRef.replace("<span>","");
+                            testCaseRef = testCaseRef.replace("</span>","");
                             String[] mytestGoalname = testCaseRef.split(",");
                             if (job.has("-testTarget " )) {
                                 testCaseRef = job.getString("-testTarget ");
