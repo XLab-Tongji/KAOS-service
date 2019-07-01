@@ -86,7 +86,12 @@ public class SaveToMongodbController {
         return saveToMongodbService.doDeleteShapeToMongodb(id,name,style,projectName);
     }
 
-
+    @RequestMapping(value = "/loadmydocument" ,method = RequestMethod.GET)
+    @ResponseBody
+    public List<KaoserFile> loadmydocument(@RequestParam(value = "projectName")String projectName)
+            throws IOException{
+        return saveToMongodbService.findMyPagingDocument(projectName);
+    }
 
 
 

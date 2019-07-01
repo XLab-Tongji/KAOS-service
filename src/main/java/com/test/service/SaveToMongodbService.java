@@ -107,7 +107,12 @@ public class SaveToMongodbService {
         List result = mongoTemplate.find(new Query(criteria),KaoserShape.class);
         return result;
     }
-
+    public List<KaoserFile> findMyPagingDocument(String projectName){
+        Criteria criteria = new Criteria();
+        criteria.andOperator(Criteria.where("projectname").is(projectName));
+        List result = mongoTemplate.find(new Query(criteria),KaoserFile.class);
+        return result;
+    }
     public KaoserFile addNewFile(String username,
                                          String projectName,
                                          String title){
